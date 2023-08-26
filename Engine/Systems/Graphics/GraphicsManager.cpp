@@ -11,4 +11,8 @@ namespace gde::system {
 		engine.getDebugManager().getLogger().Log(Logger::Verbose, "GraphicsManager Freed");
 	}
 
+	void GraphicsManager::drawFrame() {
+		vkInterface.drawFrame();
+	}
+
 }

@@ -17,7 +17,10 @@ namespace gde {
 
 		while (!graphicsManager.window.shouldClose()) {
 			graphicsManager.window.pollEvents();
+			graphicsManager.drawFrame();
 		}
+
+		graphicsManager.waitIdle();
 	}
 
 }

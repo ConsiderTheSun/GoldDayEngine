@@ -139,14 +139,24 @@
     <ClCompile Include="Engine\Systems\Debug\DebugManager.cpp" />
     <ClCompile Include="Engine\Systems\Debug\Logger.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Device.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Model.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\Window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\GoldDayEngine.h" />
     <ClInclude Include="Engine\Systems\Debug\DebugManager.h" />
     <ClInclude Include="Engine\Systems\Debug\Logger.h" />
     <ClInclude Include="Engine\Systems\Graphics\GraphicsManager.h" />
+    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Device.h" />
+    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Model.h" />
+    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.h" />
+    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.h" />
     <ClInclude Include="Engine\Systems\Graphics\Window.h" />
     <ClInclude Include="Engine\Systems\System.h" />
