@@ -31,7 +31,7 @@ class Device {
   const bool enableValidationLayers = true;
 #endif
 
-  Device(GoldDayEngine& engine, Window &window);
+  Device(GoldDayEngine& _engine, Window& _window);
   ~Device();
 
   // Not copyable or movable

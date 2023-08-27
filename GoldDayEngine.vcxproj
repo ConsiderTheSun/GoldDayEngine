@@ -26,6 +26,7 @@
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -70,6 +71,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+
+<ItemDefinitionGroup>
+  <CustomBuildStep>
+    <Command>Engine\Utilities\compile.bat</Command>
+    <Outputs>Engine\Systems\Graphics\DefaultShaders\Compiled\default.*</Outputs>
+    <Inputs>Engine\Systems\Graphics\DefaultShaders\default.*</Inputs>
+  </CustomBuildStep>
+</ItemDefinitionGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -104,7 +114,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -135,16 +145,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\GoldDayEngine.cpp" />
     <ClCompile Include="Engine\Systems\Debug\DebugManager.cpp" />
     <ClCompile Include="Engine\Systems\Debug\Logger.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\Camera.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="Engine\Systems\Graphics\Renderer.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Device.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Model.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.cpp" />
     <ClCompile Include="Engine\Systems\Graphics\Window.cpp" />
+    <ClCompile Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.cpp" />
+    <ClCompile Include="Engine\Systems\HumanInterfaceManager\Input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,14 +167,19 @@
     <ClInclude Include="Engine\GoldDayEngine.h" />
     <ClInclude Include="Engine\Systems\Debug\DebugManager.h" />
     <ClInclude Include="Engine\Systems\Debug\Logger.h" />
+    <ClInclude Include="Engine\Systems\Graphics\Camera.h" />
     <ClInclude Include="Engine\Systems\Graphics\GraphicsManager.h" />
+    <ClInclude Include="Engine\Systems\Graphics\Renderer.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Device.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Model.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.h" />
     <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.h" />
     <ClInclude Include="Engine\Systems\Graphics\Window.h" />
+    <ClInclude Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.h" />
+    <ClInclude Include="Engine\Systems\HumanInterfaceManager\Input.h" />
     <ClInclude Include="Engine\Systems\System.h" />
+    <ClInclude Include="Engine\Utilities\Hash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -48,8 +48,8 @@ void DestroyDebugUtilsMessengerEXT(
 }
 
 // class member functions
-Device::Device(GoldDayEngine& e, Window &window) : engine(e),window{window} {
-    engine.getDebugManager().getLogger().Log(Logger::Verbose, "Device Instantiated");
+Device::Device(GoldDayEngine& _engine, Window& _window) : engine(_engine),window{ _window } {
+    engine.getDebugManager().getLogger().log(Logger::Verbose, "Device Instantiated");
     createInstance();
     setupDebugMessenger();
     createSurface();
@@ -59,7 +59,7 @@ Device::Device(GoldDayEngine& e, Window &window) : engine(e),window{window} {
 }
 
 Device::~Device() {
-    engine.getDebugManager().getLogger().Log(Logger::Verbose, "Device Freed");
+    engine.getDebugManager().getLogger().log(Logger::Verbose, "Device Freed");
     vkDestroyCommandPool(device_, commandPool, nullptr);
     vkDestroyDevice(device_, nullptr);
 
@@ -73,7 +73,7 @@ Device::~Device() {
 
 void Device::createInstance() {
   if (enableValidationLayers && !checkValidationLayerSupport()) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "validation layers requested, but not available!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "validation layers requested, but not available!");
   }
 
   VkApplicationInfo appInfo = {};
@@ -105,7 +105,7 @@ void Device::createInstance() {
   }
 
   if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create instance!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create instance!");
 
   }
 
@@ -116,9 +116,9 @@ void Device::pickPhysicalDevice() {
   uint32_t deviceCount = 0;
   vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
   if (deviceCount == 0) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to find GPUs with Vulkan support!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to find GPUs with Vulkan support!");
   }
-  engine.getDebugManager().getLogger().Log(Logger::Verbose, "Device count: " + std::to_string(deviceCount));
+  engine.getDebugManager().getLogger().log(Logger::Verbose, "Device count: " + std::to_string(deviceCount));
 
   std::vector<VkPhysicalDevice> devices(deviceCount);
   vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
@@ -131,13 +131,13 @@ void Device::pickPhysicalDevice() {
   }
 
   if (physicalDevice == VK_NULL_HANDLE) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to find a suitable GPU!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to find a suitable GPU!");
   }
 
   vkGetPhysicalDeviceProperties(physicalDevice, &properties);
 
   std::string dn(properties.deviceName);
-  engine.getDebugManager().getLogger().Log(Logger::Verbose, "physical device: " + dn);
+  engine.getDebugManager().getLogger().log(Logger::Verbose, "physical device: " + dn);
 
 }
 
@@ -180,7 +180,7 @@ void Device::createLogicalDevice() {
   }
 
   if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device_) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create logical device!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create logical device!");
   }
 
   vkGetDeviceQueue(device_, indices.graphicsFamily, 0, &graphicsQueue_);
@@ -197,7 +197,7 @@ void Device::createCommandPool() {
       VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
   if (vkCreateCommandPool(device_, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create command pool!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create command pool!");
   }
 }
 
@@ -239,7 +239,7 @@ void Device::setupDebugMessenger() {
   VkDebugUtilsMessengerCreateInfoEXT createInfo;
   populateDebugMessengerCreateInfo(createInfo);
   if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to set up debug messenger!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to set up debug messenger!");
   }
 }
 
@@ -288,21 +288,21 @@ void Device::hasGflwRequiredInstanceExtensions() {
   std::vector<VkExtensionProperties> extensions(extensionCount);
   vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, extensions.data());
 
-  engine.getDebugManager().getLogger().Log(Logger::Verbose, "available extensions:");
+  engine.getDebugManager().getLogger().log(Logger::Verbose, "available extensions:");
   std::unordered_set<std::string> available;
   for (const auto &extension : extensions) {
     std::string str(extension.extensionName);
-    engine.getDebugManager().getLogger().Log(Logger::Verbose, "\t\t"+ str);
+    engine.getDebugManager().getLogger().log(Logger::Verbose, "\t\t"+ str);
     available.insert(extension.extensionName);
   }
 
-  engine.getDebugManager().getLogger().Log(Logger::Verbose, "required extensions:");
+  engine.getDebugManager().getLogger().log(Logger::Verbose, "required extensions:");
   auto requiredExtensions = getRequiredExtensions();
   for (const auto &required : requiredExtensions) {
     std::string str(required);
-    engine.getDebugManager().getLogger().Log(Logger::Verbose, "\t\t" + str);
+    engine.getDebugManager().getLogger().log(Logger::Verbose, "\t\t" + str);
     if (available.find(required) == available.end()) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "Missing required glfw extension!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "Missing required glfw extension!");
     }
   }
 }
@@ -397,7 +397,7 @@ VkFormat Device::findSupportedFormat(
       return format;
     }
   }
-  engine.getDebugManager().getLogger().Log(Logger::Error, "failed to find supported format!");
+  engine.getDebugManager().getLogger().log(Logger::Error, "failed to find supported format!");
 
 }
 
@@ -411,7 +411,7 @@ uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags prope
     }
   }
 
-  engine.getDebugManager().getLogger().Log(Logger::Error, "failed to find suitable memory type!");
+  engine.getDebugManager().getLogger().log(Logger::Error, "failed to find suitable memory type!");
 }
 
 void Device::createBuffer(
@@ -427,7 +427,7 @@ void Device::createBuffer(
   bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
   if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create vertex buffer!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "failed to create vertex buffer!");
   }
 
   VkMemoryRequirements memRequirements;
@@ -439,7 +439,7 @@ void Device::createBuffer(
   allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
   if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to allocate vertex buffer memory!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to allocate vertex buffer memory!");
   }
 
   vkBindBufferMemory(device_, buffer, bufferMemory, 0);
@@ -522,7 +522,7 @@ void Device::createImageWithInfo(
     VkImage &image,
     VkDeviceMemory &imageMemory) {
   if (vkCreateImage(device_, &imageInfo, nullptr, &image) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create image!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create image!");
   }
 
   VkMemoryRequirements memRequirements;
@@ -534,11 +534,11 @@ void Device::createImageWithInfo(
   allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
   if (vkAllocateMemory(device_, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to allocate image memory!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to allocate image memory!");
   }
 
   if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to bind image memory!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to bind image memory!");
   }
 }
 

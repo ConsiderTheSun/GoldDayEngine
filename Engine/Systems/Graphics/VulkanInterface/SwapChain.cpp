@@ -12,13 +12,13 @@
 
 namespace gde {
 
-SwapChain::SwapChain(GoldDayEngine& e, Device& deviceRef, VkExtent2D extent)
-    : device{ deviceRef }, windowExtent{ extent }, engine{ e } {
+SwapChain::SwapChain(GoldDayEngine& _engine, Device& _device, VkExtent2D extent)
+    : device{ _device }, windowExtent{ extent }, engine{ _engine } {
     init();
 }
 SwapChain::SwapChain(
-    GoldDayEngine& e, Device& deviceRef, VkExtent2D extent, std::shared_ptr<SwapChain> previous)
-    : device{ deviceRef }, windowExtent{ extent }, oldSwapChain{ previous }, engine{ e } {
+    GoldDayEngine& _engine, Device& _device, VkExtent2D extent, std::shared_ptr<SwapChain> previous)
+    : device{ _device }, windowExtent{ extent }, oldSwapChain{ previous }, engine{ _engine } {
     init();
     oldSwapChain = nullptr;
 }
@@ -107,7 +107,7 @@ VkResult SwapChain::submitCommandBuffers(
   vkResetFences(device.device(), 1, &inFlightFences[currentFrame]);
   if (vkQueueSubmit(device.graphicsQueue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
       VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to submit draw command buffer!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to submit draw command buffer!");
 
   }
 
@@ -176,7 +176,7 @@ void SwapChain::createSwapChain() {
   createInfo.oldSwapchain = oldSwapChain == nullptr ? VK_NULL_HANDLE : oldSwapChain->swapChain;
 
   if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create swap chain!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create swap chain!");
   }
 
   // we only specified a minimum number of images in the swap chain, so the implementation is
@@ -207,7 +207,7 @@ void SwapChain::createImageViews() {
 
     if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
         VK_SUCCESS) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create texture image view!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "failed to create texture image view!");
     }
   }
 }
@@ -269,7 +269,7 @@ void SwapChain::createRenderPass() {
   renderPassInfo.pDependencies = &dependency;
 
   if (vkCreateRenderPass(device.device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
-    engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create render pass!");
+    engine.getDebugManager().getLogger().log(Logger::Error, "failed to create render pass!");
   }
 }
 
@@ -293,13 +293,14 @@ void SwapChain::createFramebuffers() {
             &framebufferInfo,
             nullptr,
             &swapChainFramebuffers[i]) != VK_SUCCESS) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create framebuffer!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "failed to create framebuffer!");
     }
   }
 }
 
 void SwapChain::createDepthResources() {
   VkFormat depthFormat = findDepthFormat();
+  swapChainDepthFormat = depthFormat;
   VkExtent2D swapChainExtent = getSwapChainExtent();
 
   depthImages.resize(imageCount());
@@ -341,7 +342,7 @@ void SwapChain::createDepthResources() {
     viewInfo.subresourceRange.layerCount = 1;
 
     if (vkCreateImageView(device.device(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create texture image view!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "failed to create texture image view!");
 
     }
   }
@@ -366,7 +367,7 @@ void SwapChain::createSyncObjects() {
         vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
             VK_SUCCESS ||
         vkCreateFence(device.device(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
-      engine.getDebugManager().getLogger().Log(Logger::Error, "failed to create synchronization objects for a frame!");
+      engine.getDebugManager().getLogger().log(Logger::Error, "failed to create synchronization objects for a frame!");
     }
   }
 }
@@ -387,19 +388,19 @@ VkPresentModeKHR SwapChain::chooseSwapPresentMode(
     const std::vector<VkPresentModeKHR> &availablePresentModes) {
   for (const auto &availablePresentMode : availablePresentModes) {
     if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
-      engine.getDebugManager().getLogger().Log(Logger::Verbose, "Present mode: Mailbox");
+      engine.getDebugManager().getLogger().log(Logger::Verbose, "Present mode: Mailbox");
       return availablePresentMode;
     }
   }
 
   // for (const auto &availablePresentMode : availablePresentModes) {
   //   if (availablePresentMode == VK_PRESENT_MODE_IMMEDIATE_KHR) {
-  //     engine.getDebugManager().getLogger().Log(Logger::Verbose, "Present mode: Immediate");
+  //     engine.getDebugManager().getLogger().log(Logger::Verbose, "Present mode: Immediate");
   //     return availablePresentMode;
   //   }
   // }
   
-  engine.getDebugManager().getLogger().Log(Logger::Verbose, "Present mode: V-Sync");
+  engine.getDebugManager().getLogger().log(Logger::Verbose, "Present mode: V-Sync");
   return VK_PRESENT_MODE_FIFO_KHR;
 }
 

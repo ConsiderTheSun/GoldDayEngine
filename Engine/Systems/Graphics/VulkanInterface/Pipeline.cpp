@@ -11,18 +11,18 @@
 
 namespace gde {
     Pipeline::Pipeline(
-        GoldDayEngine& e,
-        Device& d,
+        GoldDayEngine& _engine,
+        Device& _device,
         const std::string& vertFilepath,
         const std::string& fragFilepath,
         const PipelineConfigInfo& configInfo)
-        : engine(e), device{ d } {
-        engine.getDebugManager().getLogger().Log(Logger::Verbose, "Pipeline Instantiated");
+        : engine(_engine), device{ _device } {
+        engine.getDebugManager().getLogger().log(Logger::Verbose, "Pipeline Instantiated");
         createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
     }
 
     Pipeline::~Pipeline() {
-        engine.getDebugManager().getLogger().Log(Logger::Verbose, "Pipeline Freed");
+        engine.getDebugManager().getLogger().log(Logger::Verbose, "Pipeline Freed");
         vkDestroyShaderModule(device.device(), vertShaderModule, nullptr);
         vkDestroyShaderModule(device.device(), fragShaderModule, nullptr);
         vkDestroyPipeline(device.device(), graphicsPipeline, nullptr);
@@ -117,7 +117,7 @@ namespace gde {
             &pipelineInfo,
             nullptr,
             &graphicsPipeline) != VK_SUCCESS) {
-            engine.getDebugManager().getLogger().Log(Logger::Error, "Failed to create pipeline");
+            engine.getDebugManager().getLogger().log(Logger::Error, "Failed to create pipeline");
         }
     }
 
@@ -128,7 +128,7 @@ namespace gde {
         createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
         if (vkCreateShaderModule(device.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
-            engine.getDebugManager().getLogger().Log(Logger::Error, "Failed to create shader module");
+            engine.getDebugManager().getLogger().log(Logger::Error, "Failed to create shader module");
         }
     }
     

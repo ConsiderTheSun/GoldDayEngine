@@ -30,8 +30,8 @@ namespace gde {
 	class Pipeline {
 	public:
 		Pipeline(
-			GoldDayEngine& engine,
-			Device& device,
+			GoldDayEngine& _engine,
+			Device& _device,
 			const std::string& vertFilepath,
 			const std::string& fragFilepath,
 			const PipelineConfigInfo& configInfo);

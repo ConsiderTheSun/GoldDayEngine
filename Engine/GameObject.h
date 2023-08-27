@@ -2,24 +2,23 @@
 
 #include "Systems/Graphics/VulkanInterface/Model.h"
 
-// std
+#include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 
 namespace gde {
 
-    struct Transform2dComponent {
-        glm::vec2 translation{};  // (position offset)
-        glm::vec2 scale{ 1.f, 1.f };
-        float rotation;
+    struct TransformComponent {
+        glm::vec3 translation{};
 
-        glm::mat2 mat2() {
-            const float s = glm::sin(rotation);
-            const float c = glm::cos(rotation);
-            glm::mat2 rotMatrix{ {c, s}, {-s, c} };
+        // only allowing uniform scale allows for passing the cheaper mat4() to shaders instead of normalMatrix()
+        // https://paroj.github.io/gltut/Illumination/Tut09%20Normal%20Transformation.html
+        float scale{ 1.0f }; 
 
-            glm::mat2 scaleMat{ {scale.x, .0f}, {.0f, scale.y} };
-            return rotMatrix * scaleMat;
-        }
+        glm::vec3 rotation{};
+
+        
+        glm::mat4 mat4();
+        glm::mat3 normalMatrix();
     };
 
     class GameObject {
@@ -40,10 +39,10 @@ namespace gde {
 
         std::shared_ptr<Model> model{};
         glm::vec3 color{};
-        Transform2dComponent transform2d{};
+        TransformComponent transform{};
 
     private:
-        GameObject(id_t objId) : id{ objId } {}
+        GameObject(id_t _id) : id{ _id } {}
 
         id_t id;
     };

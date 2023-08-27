@@ -19,7 +19,7 @@ int main() {
 
     gde::GoldDayEngine gde{"May All Your Days Be Gold", glm::vec2(WIDTH,HEIGHT)};
 
-    gde.Start();
+    gde.start();
 
     //gde.debugManager.logger.setChannel(gde::Logger::Verbose, false);
 

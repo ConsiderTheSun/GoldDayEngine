@@ -13,23 +13,43 @@ namespace gde {
 
 	class VulkanInterface {
 	public:
-		VulkanInterface(GoldDayEngine& e, Window& w);
+		VulkanInterface(GoldDayEngine& _engine, Window& _window);
 		~VulkanInterface();
 
 		VulkanInterface(const VulkanInterface&) = delete;
 		VulkanInterface& operator=(const VulkanInterface&) = delete;
 	
 		void waitIdle() { vkDeviceWaitIdle(device.device()); }
-		void drawFrame();
+
+		VkRenderPass getSwapChainRenderPass() const { return swapChain->getRenderPass(); }
+		float getAspectRatio() const { return swapChain->extentAspectRatio(); }
+		
+		bool isFrameInProgress() const { return isFrameStarted; }
+
+		VkCommandBuffer getCurrentCommandBuffer() const {
+			assert(isFrameStarted && "Cannot get command buffer when frame not in progress");
+			return commandBuffers[currentFrameIndex];
+		}
+
+		int getFrameIndex() const {
+			assert(isFrameStarted && "Cannot get frame index when frame not in progress");
+			return currentFrameIndex;
+		}
+
+
+	
+		VkCommandBuffer beginFrame();
+		void endFrame();
+		void beginSwapChainRenderPass(VkCommandBuffer commandBuffer);
+		void endSwapChainRenderPass(VkCommandBuffer commandBuffer);
+
+		Device& getDevice() { return device; }
+		
 	private:
-		void loadGameObjects();
-		void createPipelineLayout();
-		void createPipeline();
+
 		void createCommandBuffers();
 		void freeCommandBuffers();
 		void recreateSwapChain();
-		void recordCommandBuffer(int imageIndex);
-		void renderGameObjects(VkCommandBuffer commandBuffer);
 
 		GoldDayEngine& engine;
 		Window& window;
@@ -37,9 +57,12 @@ namespace gde {
 		Device device{ engine, window };
 
 		std::unique_ptr<SwapChain> swapChain;
-		std::unique_ptr<Pipeline> pipeline;
-		VkPipelineLayout pipelineLayout;
+
 		std::vector<VkCommandBuffer> commandBuffers;
-		std::vector<GameObject> gameObjects;
+		
+		uint32_t currentImageIndex;
+		int currentFrameIndex{ 0 };
+
+		bool isFrameStarted{false};
 	};
 }
