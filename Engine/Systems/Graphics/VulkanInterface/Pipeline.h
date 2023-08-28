@@ -13,6 +13,8 @@ namespace gde {
 		PipelineConfigInfo(const PipelineConfigInfo&) = delete;
 		PipelineConfigInfo& operator=(const PipelineConfigInfo&) = delete;
 
+		std::vector<VkVertexInputBindingDescription> bindingDescriptions{};
+		std::vector<VkVertexInputAttributeDescription> attributeDescriptions{};
 		VkPipelineViewportStateCreateInfo viewportInfo;
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
 		VkPipelineRasterizationStateCreateInfo rasterizationInfo;
@@ -58,6 +60,6 @@ namespace gde {
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule;
 
-		GoldDayEngine& engine; // move this?
+		GoldDayEngine& engine;
 	};
 }

@@ -13,84 +13,62 @@
 #include "../GoldDayEngine.h"
 
 namespace gde {
-	struct SimplePushConstantData {
-		glm::mat4 transform{ 1.f };
-		glm::mat4 modelMatrix{ 1.f };
-	};
+	
 
-	Renderer::Renderer(GoldDayEngine& _engine, Device& _device, VkRenderPass renderPass)
+	Renderer::Renderer(GoldDayEngine& _engine, 
+		Device& _device, 
+		VkRenderPass renderPass, 
+		VkDescriptorSetLayout globalSetLayout)
 		: engine{_engine},device{ _device } {
-		createPipelineLayout();
-		createPipeline(renderPass);
+		
+		defaultPipelineIndex = engine.getGraphicsManager().getVkInterface().createPipeline(VulkanInterface::PipelineType::DEFAULT);
+		lightPipelineIndex = engine.getGraphicsManager().getVkInterface().createPipeline(VulkanInterface::PipelineType::LIGHT);
 	}
 
 	Renderer::~Renderer() {
-		vkDestroyPipelineLayout(device.device(), pipelineLayout, nullptr);
 	}
 
 
-	void Renderer::createPipelineLayout() {
-		VkPushConstantRange pushConstantRange{};
-		pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
-		pushConstantRange.offset = 0;
-		pushConstantRange.size = sizeof(SimplePushConstantData);
-
-		VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-		pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-		pipelineLayoutInfo.setLayoutCount = 0;
-		pipelineLayoutInfo.pSetLayouts = nullptr;
-		pipelineLayoutInfo.pushConstantRangeCount = 1;
-		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-		if (vkCreatePipelineLayout(device.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
-			VK_SUCCESS) {
-			engine.getDebugManager().getLogger().log(Logger::Error, "failed to create pipeline layout!");
-		}
-	}
-	void Renderer::createPipeline(VkRenderPass renderPass) {
-		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
-
-		PipelineConfigInfo pipelineConfig{};
-		Pipeline::defaultPipelineConfigInfo(pipelineConfig);
+	void Renderer::renderGameObjects() {
+		auto& vkInterface = engine.getGraphicsManager().getVkInterface();
 		
-		pipelineConfig.renderPass = engine.getGraphicsManager().getVkInterface().getSwapChainRenderPass();
+		vkInterface.bindPipeline(defaultPipelineIndex);
+		vkInterface.bindDescriptorSets(defaultPipelineIndex);
 
-		pipelineConfig.pipelineLayout = pipelineLayout;
-		pipeline = std::make_unique<Pipeline>(
-			engine,
-			device,
-			"Engine/Systems/Graphics/DefaultShaders/Compiled/default.vert.spv",
-			"Engine/Systems/Graphics/DefaultShaders/Compiled/default.frag.spv",
-			pipelineConfig);
-	}
+		for (auto& kv : engine.gameObjects) {
+			auto& obj = kv.second;
+			if (obj.model == nullptr) continue;
 
-	void Renderer::renderGameObjects(VkCommandBuffer commandBuffer, 
-		std::vector<GameObject>& gameObjects, 
-		const Camera& camera) {
-		pipeline->bind(commandBuffer);
+			VulkanInterface::DefaultPushConstantData push{};
+			push.modelMatrix = obj.transform.mat4();
 
-		auto projectionView = camera.getProjection() * camera.getView();
-
-		for (auto& obj : gameObjects) {
+			vkInterface.setPushConstantData(defaultPipelineIndex, push);
 			
-			SimplePushConstantData push{};
-			auto modelMatrix = obj.transform.mat4();
-
-			
-			push.transform = projectionView * modelMatrix;
-			push.modelMatrix = modelMatrix;
-
-			vkCmdPushConstants(
-				commandBuffer,
-				pipelineLayout,
-				VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
-				0,
-				sizeof(SimplePushConstantData),
-				&push);
-			obj.model->bind(commandBuffer);
-			obj.model->draw(commandBuffer);
+			vkInterface.drawModel(obj.model);
 		}
-
 	}
+
+	void Renderer::renderLights() {
+		auto& vkInterface = engine.getGraphicsManager().getVkInterface();
+
+		vkInterface.bindPipeline(lightPipelineIndex);
+		vkInterface.bindDescriptorSets(lightPipelineIndex);
+
+		for (auto& kv : engine.gameObjects) {
+			auto& obj = kv.second;
+			if (obj.pointLight == nullptr) continue;
+
+			VulkanInterface::PointLightPushConstantData push{};
+			push.position = glm::vec4(obj.transform.translation, 1.f);
+			push.color = glm::vec4(obj.color, obj.pointLight->lightIntensity);
+			push.radius = obj.transform.scale;
+
+			vkInterface.setPushConstantData(lightPipelineIndex, push);
+
+			vkInterface.drawQuad();
+		}
+	}
+
 
 
 }

@@ -5,6 +5,7 @@
 
 #include <glm/vec2.hpp>
 #include <string>
+#include <memory>
 
 namespace gde {
 	class GoldDayEngine;

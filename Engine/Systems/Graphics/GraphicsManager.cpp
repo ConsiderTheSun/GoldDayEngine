@@ -2,33 +2,68 @@
 #include "../GoldDayEngine.h"
 
 namespace gde::system {
+	
+
 	GraphicsManager::GraphicsManager(GoldDayEngine& _engine, std::string windowName, glm::vec2 windowDimentions) :
 			System(_engine), 
 			window(_engine, windowName, windowDimentions), 
-			renderer{ _engine,vkInterface.getDevice(), vkInterface.getSwapChainRenderPass() } {
+			vkInterface{ engine,window },
+			renderer{ _engine,vkInterface.getDevice(), vkInterface.getSwapChainRenderPass(),vkInterface.getGlobalDescriptorSetLayout() }{
 		engine.getDebugManager().getLogger().log(Logger::Verbose, "GraphicsManager Instantiated");
-		//mainCamera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
-		mainCamera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
 	}
 
 	GraphicsManager::~GraphicsManager() {
 		engine.getDebugManager().getLogger().log(Logger::Verbose, "GraphicsManager Freed");
 	}
 
-	void GraphicsManager::updateCamera() {
-		float aspect = vkInterface.getAspectRatio();
-		mainCamera.setPerspectiveProjection(aspect, 0.1f, 10.f);
+	void GraphicsManager::setCameraAspectRatio(float aspect) {
+		mainCamera.setPerspectiveProjection(aspect, 0.1f, 100.f);
 	}
-	void GraphicsManager::drawFrame() {
 
-		if (auto commandBuffer = vkInterface.beginFrame()) {
+	void GraphicsManager::drawFrame(float dt) {
+		auto commandBuffer = vkInterface.beginFrame();
+		if (commandBuffer) {
+
+			updateUbo();
+
 			vkInterface.beginSwapChainRenderPass(commandBuffer);
 
-			renderer.renderGameObjects(commandBuffer, engine.gameObjects, mainCamera);
-				
+			renderer.renderGameObjects();
+			if (engine.getDebugManager().isLightRenderingEnabled()) {
+				renderer.renderLights();
+			}
+
 			vkInterface.endSwapChainRenderPass(commandBuffer);
 			vkInterface.endFrame();
 		}
+	}
+
+	void GraphicsManager::updateUbo() {
+		VulkanInterface::GlobalUbo ubo{};
+
+		// update camera stuff
+		ubo.projectionView = mainCamera.getProjection() * mainCamera.getView();
+		ubo.view = mainCamera.getView();
+		ubo.inverseView = mainCamera.getInverseView();
+
+		// update light stuff
+		int lightIndex = 0;
+		for (auto& kv : engine.gameObjects) {
+			auto& obj = kv.second;
+			if (obj.pointLight == nullptr) continue;
+
+			assert(lightIndex < MAX_LIGHTS && "Point lights exceed maximum specified");
+
+			// copy light to ubo
+			ubo.pointLights[lightIndex].position = glm::vec4(obj.transform.translation, 1.f);
+			ubo.pointLights[lightIndex].color = glm::vec4(obj.color, obj.pointLight->lightIntensity);
+
+			lightIndex += 1;
+		}
+		ubo.numLights = lightIndex;
+
+		// writes to gpu
+		vkInterface.setUboData(ubo);
 	}
 
 }

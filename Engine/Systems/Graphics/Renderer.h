@@ -1,7 +1,7 @@
 #pragma once
 
 #include "VulkanInterface/Device.h"
-#include "../GameObject.h"
+#include "../GameObject/GameObject.h"
 #include "VulkanInterface/Pipeline.h"
 #include "Camera.h"
 
@@ -14,24 +14,22 @@ namespace gde {
 
 	class Renderer {
 	public:
-		Renderer(GoldDayEngine& _engine, Device& _device, VkRenderPass renderPass);
+		Renderer(GoldDayEngine& _engine, 
+			Device& _device, 
+			VkRenderPass renderPass, 
+			VkDescriptorSetLayout globalSetLayout);
 		~Renderer();
 
 		Renderer(const Renderer&) = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
-		void renderGameObjects(VkCommandBuffer commandBuffer, 
-			std::vector<GameObject>& gameObjects,
-			const Camera& camera);
-
+		void renderGameObjects();
+		void renderLights();
 	private:
-		void createPipelineLayout();
-		void createPipeline(VkRenderPass renderPass);
-
 		Device& device;
 		GoldDayEngine& engine;
 
-		std::unique_ptr<Pipeline> pipeline;
-		VkPipelineLayout pipelineLayout;
+		int defaultPipelineIndex;
+		int lightPipelineIndex;
 	};
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/vec2.hpp>
+#include <chrono>
 
 #include "Systems/Debug/DebugManager.h"
 #include "Systems/Graphics/GraphicsManager.h"
@@ -28,13 +29,15 @@ namespace gde {
 		system::GraphicsManager graphicsManager;
 		system::HIM humanInterfaceManager;
 
-		float deltaTime = 0;
+		// TODO: move to dedicated frame rate manager class
+		std::chrono::steady_clock::time_point currentTime;
+		float getDeltaTime();
 
 		void loadGameObjectsTEMP();
-		void cameraControllerTEMP(float dt, GameObject& gameObject);
+		void customControllerTEMP(float dt, GameObject& gameObject);
 
 	public:
-		std::vector<GameObject> gameObjects; // TODO: move to gom
+		GameObject::Map gameObjects; // TODO: move to gom
 	};
 
 }

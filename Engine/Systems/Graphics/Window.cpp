@@ -7,9 +7,9 @@ namespace gde {
 	bool Window::scrollChange = false;
 	float Window::deltaScroll = 0.0f;
 
-	Window::Window(GoldDayEngine& _engine, std::string windowName, glm::vec2 windowDimentions) : engine(_engine), dimentions(windowDimentions) {
+	Window::Window(GoldDayEngine& _engine, std::string windowName, glm::vec2 windowDimentions) : engine{ _engine }, dimentions(windowDimentions) {
 		engine.getDebugManager().getLogger().log(Logger::Verbose, "Window Instantiated");
-
+		
 		glfwInit();
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);

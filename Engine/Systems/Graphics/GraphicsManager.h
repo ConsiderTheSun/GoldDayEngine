@@ -6,6 +6,7 @@
 #include "VulkanInterface/VulkanInterface.h"
 #include "Renderer.h"
 #include "Camera.h"
+#include "VulkanInterface/DescriptorSet.h"
 namespace gde::system {
 	class GraphicsManager : public System {
 	public:
@@ -20,14 +21,15 @@ namespace gde::system {
 		Window& getWindow() { return window; }
 		VulkanInterface& getVkInterface() { return vkInterface; }
 
-		void updateCamera();
-		void drawFrame();
+		void setCameraAspectRatio(float aspect);
+		void drawFrame(float dt);
 		void waitIdle() { vkInterface.waitIdle(); }
 	private:
 		Window window;
-		VulkanInterface vkInterface{engine,window };
+		VulkanInterface vkInterface;
 		Renderer renderer;
-
+		
+		void updateUbo();
 	public:
 		Camera mainCamera{}; // TODO: make component
 	};
