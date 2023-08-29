@@ -6,16 +6,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 
-
+#include "Managers/GameObjectManager/GameObjectManager.h"
 
 namespace gde {
 
 	GoldDayEngine::GoldDayEngine(std::string windowName, glm::vec2 windowDimentions) :
 			debugManager(*this), 
 			graphicsManager(*this, windowName, windowDimentions),
-            humanInterfaceManager(*this, graphicsManager.getWindow()) {
+            humanInterfaceManager(*this, graphicsManager.getWindow()),
+            gom(*this),
+            gof(gom) {
 		debugManager.getLogger().log(Logger::Verbose, "GoldDayEngine Instantiated");
-
 
         // TEMP
 		loadGameObjectsTEMP();
@@ -33,7 +34,7 @@ namespace gde {
 		debugManager.getLogger().log(Logger::Info, "GoldDayEngine Starting");
 
         // TODO: gross, will be fixed w/ camera component 
-        auto viewerObject = GameObject::createGameObject();
+        auto viewerObject = GameObject(-1);
         viewerObject.transform.translation.z = -2.5f;
 
         // TODO: prob wanna move this function to the camera component class
@@ -72,35 +73,33 @@ namespace gde {
 
 
 	void GoldDayEngine::loadGameObjectsTEMP() {
+
         std::shared_ptr<Model> model = Model::createModelFromFile(graphicsManager.getVkInterface().getDevice(), "Applications/SharedModels/flat_vase.obj");
-        auto flatVase = GameObject::createGameObject();
+        auto& flatVase = gof.makeEmptyGameObject();
         flatVase.model = model;
         flatVase.transform.translation = { -.5f, .5f, 0.f };
         flatVase.transform.scale = 1.5f;
-        gameObjects.emplace(flatVase.getId(),std::move(flatVase));
+
 
         model = Model::createModelFromFile(graphicsManager.getVkInterface().getDevice(), "Applications/SharedModels/smooth_vase.obj");
-        auto smoothVase = GameObject::createGameObject();
+        auto& smoothVase = gof.makeEmptyGameObject();
         smoothVase.model = model;
         smoothVase.transform.translation = { .5f, .5f, 0.f };
         smoothVase.transform.scale = 1.5f;
-        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
 
         model = Model::createModelFromFile(graphicsManager.getVkInterface().getDevice(), "Applications/SharedModels/quad.obj");
-        auto floor = GameObject::createGameObject();
+        auto& floor = gof.makeEmptyGameObject();
         floor.model = model;
         floor.transform.translation = { 0.f, .5f, 0.f };
         floor.transform.scale = { 3.f };
-        gameObjects.emplace(floor.getId(), std::move(floor));
 
         model = Model::createModelFromFile(graphicsManager.getVkInterface().getDevice(), "Applications/SharedModels/colored_cube.obj");
-        auto cube = GameObject::createGameObject();
+        auto& cube = gof.makeEmptyGameObject();
         cube.model = model;
         cube.transform.translation = { 0.f, -1.5f, 0.f };
         cube.transform.scale = { 0.25f };
-        gameObjects.emplace(cube.getId(), std::move(cube));
-
+        
 
         std::vector<glm::vec3> lightColors{
           {1.f, .1f, .1f},
@@ -112,14 +111,21 @@ namespace gde {
         };
 
         for (int i = 0; i < lightColors.size(); i++) {
-            auto pointLight = GameObject::makePointLight(0.2f);
+
+            auto& pointLight = gof.makeEmptyGameObject();
+            pointLight.color = glm::vec3(1.f);
+            pointLight.transform.scale = 0.1f;
+            pointLight.pointLight = std::make_unique<PointLightComponent>();
+            pointLight.pointLight->lightIntensity = 0.2f;
+
+            componentManager.addComponent(pointLight.getId(), component::PointLight{ 0.2 });
+
             pointLight.color = lightColors[i];
             auto rotateLight = glm::rotate(
                 glm::mat4(1.f),
                 (i * glm::two_pi<float>()) / lightColors.size(),
                 { 0.f, -1.f, 0.f });
             pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
-            gameObjects.emplace(pointLight.getId(), std::move(pointLight));
         }
 	}
     
@@ -191,7 +197,7 @@ namespace gde {
 
         auto rotateLight = glm::rotate(glm::mat4(1.f), 0.5f * dt, { 0.f, -1.f, 0.f });
         int lightIndex = 0;
-        for (auto& kv : gameObjects) {
+        for (auto& kv : gom.gameObjects) {
             auto& obj = kv.second;
             if (obj.pointLight == nullptr) continue;
 

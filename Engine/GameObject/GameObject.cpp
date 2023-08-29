@@ -38,13 +38,4 @@ namespace gde {
         return glm::transpose(glm::inverse(mat4()));
     }
 
-    GameObject GameObject::makePointLight(float intensity, float radius, glm::vec3 color) {
-        GameObject gameObj = GameObject::createGameObject();
-        gameObj.color = color;
-        gameObj.transform.scale = radius;
-        gameObj.pointLight = std::make_unique<PointLightComponent>();
-        gameObj.pointLight->lightIntensity = intensity;
-        return gameObj;
-    }
-
 }

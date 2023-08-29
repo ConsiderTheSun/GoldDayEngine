@@ -73,8 +73,8 @@
   <ItemDefinitionGroup>
     <CustomBuildStep>
       <Command>Engine\Utilities\compile.bat</Command>
-      <Outputs>Engine\Systems\Graphics\DefaultShaders\Compiled\default.*</Outputs>
-      <Inputs>Engine\Systems\Graphics\DefaultShaders\default.*</Inputs>
+      <Outputs>Engine\Managers\Graphics\DefaultShaders\Compiled\default.*</Outputs>
+      <Inputs>Engine\Managers\Graphics\DefaultShaders\default.*</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,45 +143,55 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\GameObject\GameObject.cpp" />
+    <ClCompile Include="Engine\GameObject\GameObjectFactory.cpp" />
     <ClCompile Include="Engine\GoldDayEngine.cpp" />
-    <ClCompile Include="Engine\Systems\Debug\DebugManager.cpp" />
-    <ClCompile Include="Engine\Systems\Debug\Logger.cpp" />
-    <ClCompile Include="Engine\Systems\GameObjectManager\GameObjectManager.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\Camera.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\GraphicsManager.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\Renderer.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Buffer.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\DescriptorSet.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Device.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Model.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.cpp" />
-    <ClCompile Include="Engine\Systems\Graphics\Window.cpp" />
-    <ClCompile Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.cpp" />
-    <ClCompile Include="Engine\Systems\HumanInterfaceManager\Input.cpp" />
+    <ClCompile Include="Engine\Managers\Debug\DebugManager.cpp" />
+    <ClCompile Include="Engine\Managers\Debug\Logger.cpp" />
+    <ClCompile Include="Engine\Managers\GameObjectManager\GameObjectManager.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\Camera.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\GraphicsManager.cpp" />
+    <ClCompile Include="Engine\Systems\Light.cpp" />
+    <ClCompile Include="Engine\Systems\LightRenderer.cpp" />
+    <ClCompile Include="Engine\Systems\Renderer.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Buffer.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\DescriptorSet.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Device.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Model.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Pipeline.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\SwapChain.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\VulkanInterface.cpp" />
+    <ClCompile Include="Engine\Managers\Graphics\Window.cpp" />
+    <ClCompile Include="Engine\Managers\HumanInterfaceManager\HumanInterfaceManager.cpp" />
+    <ClCompile Include="Engine\Managers\HumanInterfaceManager\Input.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Managers\ComponentManager\ComponentArray.h" />
+    <ClInclude Include="Engine\Managers\ComponentManager\ComponentManager.h" />
+    <ClInclude Include="Engine\Components\PointLight.h" />
+    <ClInclude Include="Engine\Components\Transform.h" />
     <ClInclude Include="Engine\GameObject\GameObject.h" />
+    <ClInclude Include="Engine\GameObject\GameObjectFactory.h" />
     <ClInclude Include="Engine\GoldDayEngine.h" />
-    <ClInclude Include="Engine\Systems\Debug\DebugManager.h" />
-    <ClInclude Include="Engine\Systems\Debug\Logger.h" />
-    <ClInclude Include="Engine\Systems\GameObjectManager\GameObjectManager.h" />
-    <ClInclude Include="Engine\Systems\Graphics\Camera.h" />
-    <ClInclude Include="Engine\Systems\Graphics\GraphicsManager.h" />
-    <ClInclude Include="Engine\Systems\Graphics\Renderer.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Buffer.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\DescriptorSet.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Device.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Model.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.h" />
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.h" />
-    <ClInclude Include="Engine\Systems\Graphics\Window.h" />
-    <ClInclude Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.h" />
-    <ClInclude Include="Engine\Systems\HumanInterfaceManager\Input.h" />
-    <ClInclude Include="Engine\Systems\System.h" />
+    <ClInclude Include="Engine\Managers\Debug\DebugManager.h" />
+    <ClInclude Include="Engine\Managers\Debug\Logger.h" />
+    <ClInclude Include="Engine\Managers\GameObjectManager\GameObjectManager.h" />
+    <ClInclude Include="Engine\Managers\Graphics\Camera.h" />
+    <ClInclude Include="Engine\Managers\Graphics\GraphicsManager.h" />
+    <ClInclude Include="Engine\Systems\Light.h" />
+    <ClInclude Include="Engine\Systems\LightRenderer.h" />
+    <ClInclude Include="Engine\Systems\Renderer.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Buffer.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\DescriptorSet.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Device.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Model.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Pipeline.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\SwapChain.h" />
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\VulkanInterface.h" />
+    <ClInclude Include="Engine\Managers\Graphics\Window.h" />
+    <ClInclude Include="Engine\Managers\HumanInterfaceManager\HumanInterfaceManager.h" />
+    <ClInclude Include="Engine\Managers\HumanInterfaceManager\Input.h" />
+    <ClInclude Include="Engine\Managers\Manager.h" />
     <ClInclude Include="Engine\Utilities\Hash.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

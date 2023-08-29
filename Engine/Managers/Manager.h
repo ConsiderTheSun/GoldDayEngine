@@ -5,13 +5,13 @@
 
 namespace gde { class GoldDayEngine; }
 
-namespace gde::system {
-	class System {
+namespace gde::manager {
+	class Manager {
 	public:
-		System(GoldDayEngine& _engine):engine(_engine) {};
+		Manager(GoldDayEngine& _engine):engine(_engine) {};
 
-		System(const System&) = delete;
-		System& operator=(const System&) = delete;
+		Manager(const Manager&) = delete;
+		Manager& operator=(const Manager&) = delete;
 
 		virtual std::string getType() const = 0;
 

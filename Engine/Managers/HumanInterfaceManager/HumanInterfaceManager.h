@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../System.h"
+#include "../Manager.h"
 #include <glm/glm.hpp>
 
 #include "Input.h"
 
-namespace gde::system {
-	class HumanInterfaceManager : public System {
+namespace gde::manager {
+	class HumanInterfaceManager : public Manager {
 	public:
 		HumanInterfaceManager(GoldDayEngine& _engine, Window& _window);
 		~HumanInterfaceManager();

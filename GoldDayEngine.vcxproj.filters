@@ -21,55 +21,64 @@
     <ClCompile Include="Engine\GoldDayEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Debug\Logger.cpp">
+    <ClCompile Include="Engine\Managers\Debug\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\GraphicsManager.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\GraphicsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Debug\DebugManager.cpp">
+    <ClCompile Include="Engine\Managers\Debug\DebugManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\Window.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Pipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\VulkanInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Device.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\SwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Model.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\Renderer.cpp">
+    <ClCompile Include="Engine\Systems\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\Camera.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\HumanInterfaceManager\Input.cpp">
+    <ClCompile Include="Engine\Managers\HumanInterfaceManager\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\GameObject\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.cpp">
+    <ClCompile Include="Engine\Managers\HumanInterfaceManager\HumanInterfaceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\Buffer.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\Graphics\VulkanInterface\DescriptorSet.cpp">
+    <ClCompile Include="Engine\Managers\Graphics\VulkanInterface\DescriptorSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Systems\GameObjectManager\GameObjectManager.cpp">
+    <ClCompile Include="Engine\Managers\GameObjectManager\GameObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GameObject\GameObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Systems\LightRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Systems\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,61 +86,82 @@
     <ClInclude Include="Engine\GoldDayEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Debug\Logger.h">
+    <ClInclude Include="Engine\Managers\Debug\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Debug\DebugManager.h">
+    <ClInclude Include="Engine\Managers\Debug\DebugManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\GraphicsManager.h">
+    <ClInclude Include="Engine\Managers\Graphics\GraphicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\System.h">
+    <ClInclude Include="Engine\Managers\Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\Window.h">
+    <ClInclude Include="Engine\Managers\Graphics\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\VulkanInterface.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\VulkanInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Pipeline.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Pipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Device.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Device.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\SwapChain.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\SwapChain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Model.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\GameObject\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\Renderer.h">
+    <ClInclude Include="Engine\Systems\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\Camera.h">
+    <ClInclude Include="Engine\Managers\Graphics\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\HumanInterfaceManager\Input.h">
+    <ClInclude Include="Engine\Managers\HumanInterfaceManager\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Utilities\Hash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\HumanInterfaceManager\HumanInterfaceManager.h">
+    <ClInclude Include="Engine\Managers\HumanInterfaceManager\HumanInterfaceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\Buffer.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\Graphics\VulkanInterface\DescriptorSet.h">
+    <ClInclude Include="Engine\Managers\Graphics\VulkanInterface\DescriptorSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Systems\GameObjectManager\GameObjectManager.h">
+    <ClInclude Include="Engine\Managers\GameObjectManager\GameObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GameObject\GameObjectFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Systems\LightRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Systems\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\ComponentManager\ComponentManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\ComponentManager\ComponentArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\PointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

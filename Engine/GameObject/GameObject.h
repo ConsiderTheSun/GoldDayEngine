@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Systems/Graphics/VulkanInterface/Model.h"
+#include "../Managers/Graphics/VulkanInterface/Model.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -27,18 +27,17 @@ namespace gde {
         float lightIntensity = 1.0f;
     };
 
+    using id_t = unsigned int;
+
+    using Entity = std::uint32_t;
+    const Entity MAX_ENTITIES = 5000;
+
     class GameObject {
     public:
-        using id_t = unsigned int;
         using Map = std::unordered_map<id_t, GameObject>; // TODO: change this?
 
-        static GameObject createGameObject() { // TODO: move to GOF
-            static id_t currentId = 0;
-            return GameObject{ currentId++ };
-        }
 
-        static GameObject makePointLight(
-            float intensity = 10.f, float radius = 0.1f, glm::vec3 color = glm::vec3(1.f)); // TODO: move to GOF
+        GameObject(id_t _id) : id{ _id } {}
 
         GameObject(const GameObject&) = delete;
         GameObject& operator=(const GameObject&) = delete;
@@ -54,8 +53,10 @@ namespace gde {
         std::shared_ptr<Model> model{};
         std::unique_ptr<PointLightComponent> pointLight = nullptr;
 
+        bool hasPointLight = false;
+
     private:
-        GameObject(id_t _id) : id{ _id } {}
+        
 
         id_t id;
     };

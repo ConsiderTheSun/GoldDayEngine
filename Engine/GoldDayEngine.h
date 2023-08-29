@@ -3,9 +3,12 @@
 #include <glm/vec2.hpp>
 #include <chrono>
 
-#include "Systems/Debug/DebugManager.h"
-#include "Systems/Graphics/GraphicsManager.h"
-#include "Systems/HumanInterfaceManager/HumanInterfaceManager.h"
+#include "Managers/Debug/DebugManager.h"
+#include "Managers/Graphics/GraphicsManager.h"
+#include "Managers/HumanInterfaceManager/HumanInterfaceManager.h"
+#include "Managers/GameObjectManager/GameObjectManager.h"
+#include "Managers/ComponentManager/ComponentManager.h"
+#include "GameObject/GameObjectFactory.h"
 namespace gde {
 	
 	class GoldDayEngine{
@@ -17,27 +20,29 @@ namespace gde {
 		void start();
 		void end();
 
-		system::DebugManager& getDebugManager() { return debugManager; }
-		system::GraphicsManager& getGraphicsManager() { return graphicsManager; }
-		system::HIM& getHumanInterfaceManager() { return humanInterfaceManager; }
-		system::HIM& getHIM() { return humanInterfaceManager; }
-
-		
+		manager::DebugManager& getDebugManager() { return debugManager; }
+		manager::GraphicsManager& getGraphicsManager() { return graphicsManager; }
+		manager::HIM& getHumanInterfaceManager() { return humanInterfaceManager; }
+		manager::HIM& getHIM() { return humanInterfaceManager; }
+		manager::GOM& getGameObjectManager() { return gom; }
+		manager::GOM& getGOM() { return gom; }
+		manager::ComponentManager& getComponentManager() { return componentManager; }
 
 	private:
-		system::DebugManager debugManager;
-		system::GraphicsManager graphicsManager;
-		system::HIM humanInterfaceManager;
+		manager::DebugManager debugManager;
+		manager::GraphicsManager graphicsManager;
+		manager::HIM humanInterfaceManager;
+		manager::GOM gom;
+		manager::ComponentManager componentManager;
 
-		// TODO: move to dedicated frame rate manager class
+		GOF gof;
+
+		// TODO: move to dedicated frame rate manager system
 		std::chrono::steady_clock::time_point currentTime;
 		float getDeltaTime();
 
 		void loadGameObjectsTEMP();
 		void customControllerTEMP(float dt, GameObject& gameObject);
-
-	public:
-		GameObject::Map gameObjects; // TODO: move to gom
 	};
 
 }

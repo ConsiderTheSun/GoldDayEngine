@@ -254,8 +254,8 @@ namespace gde {
             newData.pipeline = std::move(std::make_unique<Pipeline>(
                 engine,
                 device,
-                "Engine/Systems/Graphics/DefaultShaders/Compiled/default.vert.spv",
-                "Engine/Systems/Graphics/DefaultShaders/Compiled/default.frag.spv",
+                "Engine/Managers/Graphics/DefaultShaders/Compiled/default.vert.spv",
+                "Engine/Managers/Graphics/DefaultShaders/Compiled/default.frag.spv",
                 pipelineConfig));
 
             break;
@@ -283,8 +283,8 @@ namespace gde {
             newData.pipeline = std::make_unique<Pipeline>(
                 engine,
                 device,
-                "Engine/Systems/Graphics/DefaultShaders/Compiled/light.vert.spv",
-                "Engine/Systems/Graphics/DefaultShaders/Compiled/light.frag.spv",
+                "Engine/Managers/Graphics/DefaultShaders/Compiled/light.vert.spv",
+                "Engine/Managers/Graphics/DefaultShaders/Compiled/light.frag.spv",
                 pipelineConfig);
             break;
         }

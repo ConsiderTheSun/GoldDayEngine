@@ -1,14 +1,15 @@
 #pragma once
 
-#include "../System.h"
+#include "../Manager.h"
 
 #include "Window.h"
 #include "VulkanInterface/VulkanInterface.h"
-#include "Renderer.h"
+#include "../../Systems/Renderer.h"
+#include "../../Systems/LightRenderer.h"
 #include "Camera.h"
-#include "VulkanInterface/DescriptorSet.h"
-namespace gde::system {
-	class GraphicsManager : public System {
+#include "../../Systems/Light.h"
+namespace gde::manager {
+	class GraphicsManager : public Manager {
 	public:
 		GraphicsManager(GoldDayEngine& _engine, std::string windowName, glm::vec2 windowDimentions);
 		~GraphicsManager();
@@ -27,9 +28,10 @@ namespace gde::system {
 	private:
 		Window window;
 		VulkanInterface vkInterface;
-		Renderer renderer;
+		system::Renderer rendererSystem;
+		system::LightRenderer lightRendererSystem;
+		system::Light lightSystem;
 		
-		void updateUbo();
 	public:
 		Camera mainCamera{}; // TODO: make component
 	};
