@@ -1,15 +1,11 @@
+#include "EngineIncludes.h"
 #include "Model.h"
-
-#include <cassert>
-#include <cstring>
-#include <unordered_map>
 
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/hash.hpp>
 
-#include "../Utilities/Hash.h"
 
 namespace std {
     template <>

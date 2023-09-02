@@ -5,11 +5,11 @@
 #include <array>
 namespace gde {
 
-//template<typename T>
+template<typename T>
 class ComponentArray
 {
 public:
-	void InsertData(Entity entity, component::PointLight component)
+	void InsertData(Entity entity, T component)
 	{
 		assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -41,7 +41,7 @@ public:
 		--mSize;
 	}
 
-	component::PointLight& GetData(Entity entity)
+	T& GetData(Entity entity)
 	{
 		assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Retrieving non-existent component.");
 
@@ -50,7 +50,7 @@ public:
 	}
 
 private:
-	std::array<component::PointLight, MAX_ENTITIES> componentArray{};
+	std::array<T, MAX_ENTITIES> componentArray{};
 
 	// Map from an entity ID to an array index.
 	std::unordered_map<Entity, size_t> mEntityToIndexMap;

@@ -1,12 +1,6 @@
-#include "SwapChain.h"
+#include "EngineIncludes.h"
 
-#include <array>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <limits>
-#include <set>
-#include <stdexcept>
+#include "SwapChain.h"
 
 #include "../GoldDayEngine.h"
 

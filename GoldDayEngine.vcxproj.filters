@@ -81,6 +81,9 @@
     <ClCompile Include="Engine\Systems\Light.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\EngineIncludes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GoldDayEngine.h">
@@ -164,5 +167,16 @@
     <ClInclude Include="Engine\Components\PointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\EngineIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Managers\GameObjectManager\GameObjectManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Engine\Managers\ComponentManager\ComponentManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

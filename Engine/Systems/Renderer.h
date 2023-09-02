@@ -1,8 +1,5 @@
 #pragma once
 
-// std
-#include <memory>
-#include <vector>
 namespace gde{ class GoldDayEngine; }
 namespace gde::system {
 	

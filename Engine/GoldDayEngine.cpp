@@ -1,12 +1,10 @@
+#include "EngineIncludes.h"
 
 #include "GoldDayEngine.h"
 
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-
 #include "Managers/GameObjectManager/GameObjectManager.h"
+#include "Managers/GameObjectManager/GameObjectManager.inl"
+
 
 namespace gde {
 
@@ -115,10 +113,12 @@ namespace gde {
             auto& pointLight = gof.makeEmptyGameObject();
             pointLight.color = glm::vec3(1.f);
             pointLight.transform.scale = 0.1f;
-            pointLight.pointLight = std::make_unique<PointLightComponent>();
-            pointLight.pointLight->lightIntensity = 0.2f;
 
-            componentManager.addComponent(pointLight.getId(), component::PointLight{ 0.2 });
+            component::Transform t{};
+            t.scale = 0.1f;
+
+            //gom.addComponent<component::Transform>(pointLight.getId(), t);
+            gom.addComponent<component::PointLight>(pointLight.getId(), component::PointLight{ 0.2 });
 
             pointLight.color = lightColors[i];
             auto rotateLight = glm::rotate(
@@ -199,7 +199,8 @@ namespace gde {
         int lightIndex = 0;
         for (auto& kv : gom.gameObjects) {
             auto& obj = kv.second;
-            if (obj.pointLight == nullptr) continue;
+            //if (obj.pointLight == nullptr) continue;
+            if (!obj.hasPointLight) continue;
 
             assert(lightIndex < MAX_LIGHTS && "Point lights exceed maximum specified");
 

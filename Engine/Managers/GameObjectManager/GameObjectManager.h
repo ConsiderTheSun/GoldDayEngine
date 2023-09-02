@@ -2,7 +2,7 @@
 
 #include "../Manager.h"
 #include "../../GameObject/GameObject.h"
-#include "../../Components/PointLight.h"
+
 
 namespace gde::manager {
 	class GameObjectManager : public Manager {
@@ -13,7 +13,8 @@ namespace gde::manager {
 		std::string getType() const override { return typeid(GameObjectManager).name(); };
 		GameObject& AddGameObject();
 
-		void addComponent(Entity id, component::PointLight component);
+		template<typename T> 
+		inline void addComponent(Entity id, T component);
 	//private:
 		GameObject::Map gameObjects;
 		

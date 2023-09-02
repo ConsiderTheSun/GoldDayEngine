@@ -1,3 +1,4 @@
+#include "EngineIncludes.h"
 #include "Light.h"
 
 #include "../GoldDayEngine.h"
@@ -25,7 +26,8 @@ namespace gde::system {
 		int lightIndex = 0;
 		for (auto& kv : engine.getGOM().gameObjects) {
 			auto& obj = kv.second;
-			if (obj.pointLight == nullptr) continue;
+
+			if (!obj.hasPointLight) continue;
 
 			component::PointLight& pl = engine.getComponentManager().getComponent(obj.getId());
 

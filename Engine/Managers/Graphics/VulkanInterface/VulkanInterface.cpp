@@ -1,14 +1,7 @@
+#include "EngineIncludes.h"
+
 #include "VulkanInterface.h"
 #include "../GoldDayEngine.h"
-
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-
-#include <array>
-#include <cassert>
-#include <stdexcept>
 
 namespace gde {
 	VulkanInterface::VulkanInterface(GoldDayEngine& _engine,Window& _window) : 

@@ -1,16 +1,12 @@
 #pragma once
 
-#include "../Managers/Graphics/Camera.h"
-// std
-#include <memory>
-#include <vector>
 #include <set>
+
+#include "../Managers/Graphics/Camera.h"
 #include "../GameObject/GameObject.h"
 
 namespace gde { class GoldDayEngine; }
 namespace gde::system {
-
-
 	class Light {
 	public:
 		Light(GoldDayEngine& _engine);

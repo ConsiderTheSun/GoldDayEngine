@@ -2,8 +2,8 @@
 
 #include "../Manager.h"
 
-#include "Window.h"
-#include "VulkanInterface/VulkanInterface.h"
+#include "EngineIncludes.h"
+
 #include "../../Systems/Renderer.h"
 #include "../../Systems/LightRenderer.h"
 #include "Camera.h"

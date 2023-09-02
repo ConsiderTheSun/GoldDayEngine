@@ -111,8 +111,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EngineIncludes.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,8 +131,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\includes\VulkanSDK;$(SolutionDir)Engine\includes\glm;$(SolutionDir)Engine\includes;$(SolutionDir)Engine\includes\tinyObjLoader;$(SolutionDir)Engine;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>EngineIncludes.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,9 +146,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\EngineIncludes.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Engine\GameObject\GameObject.cpp" />
     <ClCompile Include="Engine\GameObject\GameObjectFactory.cpp" />
-    <ClCompile Include="Engine\GoldDayEngine.cpp" />
+    <ClCompile Include="Engine\GoldDayEngine.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Engine\Managers\Debug\DebugManager.cpp" />
     <ClCompile Include="Engine\Managers\Debug\Logger.cpp" />
     <ClCompile Include="Engine\Managers\GameObjectManager\GameObjectManager.cpp" />
@@ -166,6 +177,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\EngineIncludes.h" />
     <ClInclude Include="Engine\Managers\ComponentManager\ComponentArray.h" />
     <ClInclude Include="Engine\Managers\ComponentManager\ComponentManager.h" />
     <ClInclude Include="Engine\Components\PointLight.h" />
@@ -193,6 +205,10 @@
     <ClInclude Include="Engine\Managers\HumanInterfaceManager\Input.h" />
     <ClInclude Include="Engine\Managers\Manager.h" />
     <ClInclude Include="Engine\Utilities\Hash.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Managers\ComponentManager\ComponentManager.inl" />
+    <None Include="Engine\Managers\GameObjectManager\GameObjectManager.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

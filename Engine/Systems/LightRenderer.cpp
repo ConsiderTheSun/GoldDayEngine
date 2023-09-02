@@ -1,3 +1,4 @@
+#include "EngineIncludes.h"
 #include "LightRenderer.h"
 
 #include "../GoldDayEngine.h"
@@ -20,11 +21,13 @@ namespace gde::system {
 
 		for (auto& kv : engine.getGOM().gameObjects) {
 			auto& obj = kv.second;
-			if (obj.pointLight == nullptr) continue;
+			if (!obj.hasPointLight) continue;
+
+			component::PointLight& pl = engine.getComponentManager().getComponent(obj.getId());
 
 			VulkanInterface::PointLightPushConstantData push{};
 			push.position = glm::vec4(obj.transform.translation, 1.f);
-			push.color = glm::vec4(obj.color, obj.pointLight->lightIntensity);
+			push.color = glm::vec4(obj.color, pl.lightIntensity);
 			push.radius = obj.transform.scale;
 
 			vkInterface.setPushConstantData(pipelineIndex, push);

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <glm/vec2.hpp>
-#include <chrono>
-
-#include "Managers/Debug/DebugManager.h"
 #include "Managers/Graphics/GraphicsManager.h"
 #include "Managers/HumanInterfaceManager/HumanInterfaceManager.h"
 #include "Managers/GameObjectManager/GameObjectManager.h"

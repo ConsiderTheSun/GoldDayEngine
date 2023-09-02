@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <bitset>
 
 namespace gde {
 
@@ -32,6 +33,10 @@ namespace gde {
     using Entity = std::uint32_t;
     const Entity MAX_ENTITIES = 5000;
 
+    const int MAX_COMPONENTS = 16;
+
+    using Signature = std::bitset<MAX_COMPONENTS>;
+
     class GameObject {
     public:
         using Map = std::unordered_map<id_t, GameObject>; // TODO: change this?
@@ -51,8 +56,8 @@ namespace gde {
 
         // Optional pointer components
         std::shared_ptr<Model> model{};
-        std::unique_ptr<PointLightComponent> pointLight = nullptr;
 
+        bool hasTransform = false;
         bool hasPointLight = false;
 
     private:

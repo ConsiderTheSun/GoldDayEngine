@@ -1,17 +1,14 @@
 #pragma once
 
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
-
+#include "../EngineIncludes.h"
 namespace gde {
 
     class Camera {
     public:
         void setOrthographicProjection(
-            float left, float right, float top, float bottom, float near, float far);
+            float left, float right, float top, float bottom, float cameraNear, float cameraFar);
 
-        void setPerspectiveProjection(float aspect, float near, float far);
+        void setPerspectiveProjection(float aspect, float cameraNear, float cameraFar);
         
         void setViewDirection(
             glm::vec3 position, glm::vec3 direction, glm::vec3 up = glm::vec3{ 0.f, -1.f, 0.f });

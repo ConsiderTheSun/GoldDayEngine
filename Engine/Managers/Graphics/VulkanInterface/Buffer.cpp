@@ -1,15 +1,6 @@
-/*
- * Encapsulates a vulkan buffer
- *
- * Initially based off VulkanBuffer by Sascha Willems -
- * https://github.com/SaschaWillems/Vulkan/blob/master/base/VulkanBuffer.h
- */
+#include "EngineIncludes.h"
 
 #include "Buffer.h"
-
- // std
-#include <cassert>
-#include <cstring>
 
 namespace gde {
 

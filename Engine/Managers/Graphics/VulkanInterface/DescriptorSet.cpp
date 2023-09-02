@@ -1,7 +1,6 @@
+#include "EngineIncludes.h"
 #include "DescriptorSet.h"
 
-#include <cassert>
-#include <stdexcept>
 
 #include "../GoldDayEngine.h"
 namespace gde {
@@ -196,4 +195,4 @@ namespace gde {
         vkUpdateDescriptorSets(pool.device.device(), writes.size(), writes.data(), 0, nullptr);
     }
 
-}  // namespace lve
+}

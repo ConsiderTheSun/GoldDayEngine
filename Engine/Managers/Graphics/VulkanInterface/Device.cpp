@@ -1,12 +1,9 @@
+#include "EngineIncludes.h"
 #include "Device.h"
 
-// std headers
-#include <cstring>
-#include <iostream>
-#include <set>
-#include <unordered_set>
-
 #include "../GoldDayEngine.h"
+
+#include <iostream>
 namespace gde {
 
 // local callback functions
@@ -15,7 +12,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     VkDebugUtilsMessageTypeFlagsEXT messageType,
     const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
     void *pUserData) {
-  std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
+  std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl; // cant use log because its not a member fuction
 
   return VK_FALSE;
 }

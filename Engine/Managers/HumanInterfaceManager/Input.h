@@ -44,8 +44,8 @@ namespace gde {
 		glm::vec2 mousePosition;
 		glm::vec2 deltaMouse{ 0,0 };
 
-		bool scrollChange;
-		float deltaScroll;
+		bool scrollChange = false;
+		float deltaScroll = 0;
 
 		std::unordered_map<int, ButtonState>  buttonTracker;
 	};

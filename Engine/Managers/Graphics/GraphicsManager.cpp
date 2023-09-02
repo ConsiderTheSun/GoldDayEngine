@@ -1,3 +1,5 @@
+#include "EngineIncludes.h"
+
 #include "GraphicsManager.h"
 #include "../GoldDayEngine.h"
 

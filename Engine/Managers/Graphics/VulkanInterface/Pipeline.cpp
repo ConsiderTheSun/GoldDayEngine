@@ -1,10 +1,8 @@
+#include "EngineIncludes.h"
+
 #include "Pipeline.h"
 
 
-#include <fstream>
-#include <iostream>
-#include <stdexcept>
-#include <string>
 
 #include "../GoldDayEngine.h"
 #include "Model.h"

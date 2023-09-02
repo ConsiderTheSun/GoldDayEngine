@@ -1,30 +1,31 @@
-#include "Camera.h"
+#include "EngineIncludes.h"
 
-#include <cassert>
-#include <limits>
+#include "Camera.h"
 
 namespace gde {
 
     void Camera::setOrthographicProjection(
-        float left, float right, float top, float bottom, float near, float far) {
+        float left, float right, float top, float bottom, float cameraNear, float cameraFar) {
+        glm::mat4 a{ 1.0f };
+
         projectionMatrix = glm::mat4{ 1.0f };
         projectionMatrix[0][0] = 2.f / (right - left);
         projectionMatrix[1][1] = 2.f / (bottom - top);
-        projectionMatrix[2][2] = 1.f / (far - near);
+        projectionMatrix[2][2] = 1.f / (cameraFar - cameraNear);
         projectionMatrix[3][0] = -(right + left) / (right - left);
         projectionMatrix[3][1] = -(bottom + top) / (bottom - top);
-        projectionMatrix[3][2] = -near / (far - near);
+        projectionMatrix[3][2] = -cameraNear / (cameraFar - cameraNear);
     }
 
-    void Camera::setPerspectiveProjection(float aspect, float near, float far) {
+    void Camera::setPerspectiveProjection(float aspect, float cameraNear, float cameraFar) {
         assert(glm::abs(aspect - std::numeric_limits<float>::epsilon()) > 0.0f);
         const float tanHalfFovy = tan(fovy / 2.f);
         projectionMatrix = glm::mat4{ 0.0f };
         projectionMatrix[0][0] = 1.f / (aspect * tanHalfFovy);
         projectionMatrix[1][1] = 1.f / (tanHalfFovy);
-        projectionMatrix[2][2] = far / (far - near);
+        projectionMatrix[2][2] = cameraFar / (cameraFar - cameraNear);
         projectionMatrix[2][3] = 1.f;
-        projectionMatrix[3][2] = -(far * near) / (far - near);
+        projectionMatrix[3][2] = -(cameraFar * cameraNear) / (cameraFar - cameraNear);
     }
 
     void Camera::setViewDirection(glm::vec3 position, glm::vec3 direction, glm::vec3 up) {

@@ -1,6 +1,6 @@
+#include "EngineIncludes.h"
+
 #include "Window.h"
-
-
 
 #include "../GoldDayEngine.h"
 namespace gde {
