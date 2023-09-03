@@ -19,18 +19,31 @@ namespace gde::manager {
 
 		std::string getType() const override { return typeid(MetaObjectManager).name(); };
 
-		GOM& getGOM() { return gom; } // TODO: remove this
-
-		GameObject& makeGameObject();
-
-		const Signature& getSignature(GOID goID) { return gom.getGameObject(goID).signature; };
-
+		// System Upkeep Manager MetaManaging
 		template<typename T>
-		void registerSystem(Signature signature) { sum.registerSystem<T>(signature); }
+		void registerSystem() { sum.registerSystem<T>(); }
 
 		template<typename T>
 		std::shared_ptr<T> getSystem() { return sum.getSystem<T>(); }
 
+		// Game Object Manager MetaManaging 
+
+		const GOID& makeGameObject();
+
+		const Signature& getSignature(GOID goID) { return gom.getGameObject(goID).getSignature(); };
+
+		void registerRelevantGOIDsTracking(Signature signature) { sum.registerRelevantGOIDsTracking(signature); }
+		void getRelevantGOIDs(Signature signature, GOIDItr& begin, GOIDItr& end) {
+			return sum.getRelevantGOIDs(signature, begin, end);
+		}
+
+		void getAllGOIDS(GOIDItr& begin, GOIDItr& end) {
+			return gom.getAllGOIDS( begin, end);
+		}
+
+
+
+		// Component Array Manager MetaManaging
 		template<typename T>
 		void registerComponent() { cam.registerComponent<T>(); }
 

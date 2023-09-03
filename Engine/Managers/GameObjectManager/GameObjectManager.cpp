@@ -12,10 +12,12 @@ namespace gde::manager {
 
 	}
 
-	GameObject& GOM::addGameObject() {
+	const GOID& GOM::addGameObject() {
 		auto a = gameObjects.emplace(currentId, GameObject{ currentId });
+
+		allActiveGOIDs.emplace(currentId);
 		++currentId;
-		return a.first->second;
+		return a.first->first;
 	}
 
 
@@ -24,6 +26,8 @@ namespace gde::manager {
 		return gameObjects.find(id)->second;
 	}
 
-
-	
+	void GOM::getAllGOIDS(GOIDItr& begin, GOIDItr& end) {
+		begin = allActiveGOIDs.begin();
+		end = allActiveGOIDs.end();
+	}
 }

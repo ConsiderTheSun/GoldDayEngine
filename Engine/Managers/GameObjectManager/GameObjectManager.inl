@@ -21,7 +21,6 @@ namespace gde::manager {
 
 		GameObject& go = itr->second;
 
-		go.signature.set(type, true);
+		go.addToSignature(type);
 	}
-
 }

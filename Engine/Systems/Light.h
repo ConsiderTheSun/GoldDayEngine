@@ -16,6 +16,8 @@ namespace gde::system {
 		Light(const Light&) = delete;
 		Light& operator=(const Light&) = delete;
 
+		void setSignature() override;
+
 		void updateLightData(const Camera& camera);
 	private:
 

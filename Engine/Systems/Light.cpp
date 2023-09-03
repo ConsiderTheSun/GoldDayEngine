@@ -13,6 +13,14 @@ namespace gde::system {
 	Light::~Light() {
 	}
 
+	void Light::setSignature() {
+		gde::Signature lightSignature;
+		lightSignature.set(engine.getMOM().getComponentType<component::Transform>());
+		lightSignature.set(engine.getMOM().getComponentType<component::PointLight>());
+
+		systemSignature = lightSignature;
+	}
+
 	void Light::updateLightData(const Camera& camera) {
 		VulkanInterface::GlobalUbo ubo{};
 
@@ -24,9 +32,12 @@ namespace gde::system {
 
 		// update light stuff
 		int lightIndex = 0;
-		for (auto& kv : engine.getMOM().getGOM().gameObjects) {
-			GOID id = kv.first;
-			if ((engine.getMOM().getSignature(id) & systemSignature) != systemSignature) continue;
+
+		GOIDItr itr;
+		GOIDItr end;
+		engine.getMOM().getRelevantGOIDs(systemSignature, itr, end);
+		for (; itr != end; itr++) {
+			GOID id = *itr;
 
 
 			component::PointLight& pointLight = engine.getMOM().getComponent<component::PointLight>(id);

@@ -2,16 +2,18 @@
 
 namespace gde::manager {
 	template<typename T>
-	void SUM::registerSystem(Signature signature)
+	void SUM::registerSystem()
 	{
 		const char* typeName = typeid(T).name();
 
 		assert(systems.find(typeName) == systems.end() && "Registering system more than once.");
 
-		// Create a pointer to the system and return it so it can be used externally
+		// Create a pointer to the system
 		auto system = std::make_shared<T>(engine);
-		system->setSignature(signature);
+		system->setSignature();
 		systems.insert({ typeid(T).name(), system });
+
+		registerRelevantGOIDsTracking(system->getSignature());
 	}
 
 	template<typename T>

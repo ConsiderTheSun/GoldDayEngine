@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Applications\BasicTesting\BasicTestingApp.cpp" />
     <ClCompile Include="Engine\EngineIncludes.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -177,9 +178,12 @@
     <ClCompile Include="Engine\Managers\Graphics\Window.cpp" />
     <ClCompile Include="Engine\Managers\HumanInterfaceManager\HumanInterfaceManager.cpp" />
     <ClCompile Include="Engine\Managers\HumanInterfaceManager\Input.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameSetup.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Applications\BasicTesting\BasicTestingApp.h" />
+    <ClInclude Include="EngineInterface\Application.h" />
+    <ClInclude Include="EngineInterface\EngineInterface.h" />
     <ClInclude Include="Engine\Components\Render.h" />
     <ClInclude Include="Engine\EngineIncludes.h" />
     <ClInclude Include="Engine\Managers\ComponentArrayManager\ComponentArray.h" />

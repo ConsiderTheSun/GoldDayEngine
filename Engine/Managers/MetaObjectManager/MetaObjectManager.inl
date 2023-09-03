@@ -5,5 +5,7 @@ namespace gde::manager {
 	inline void MOM::addComponent(GOID goID, const T& component) { 
 		gom.addComponent<T>(goID, cam.getComponentType<T>()); 
 		cam.addComponent<T>(goID, component);
+
+		sum.updateRelevantGOIDs(goID);
 	}
 }

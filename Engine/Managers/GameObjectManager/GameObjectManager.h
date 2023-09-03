@@ -3,24 +3,32 @@
 #include "../Manager.h"
 #include "../../GameObject/GameObject.h"
 
-
+namespace gde {
+	using GOIDContainer = std::unordered_set<GOID>;
+	using GOIDItr = GOIDContainer::const_iterator;
+}
 namespace gde::manager {
-	using ComponentType = std::uint8_t;
+	
+
 	class GameObjectManager : public Manager {
 	public:
 		GameObjectManager(GoldDayEngine& _engine);
 		~GameObjectManager();
 
 		std::string getType() const override { return typeid(GameObjectManager).name(); };
-		GameObject& addGameObject();
+		const GOID& addGameObject();
 
 		GameObject& getGameObject(GOID id);
-
+		void getAllGOIDS(GOIDItr& begin, GOIDItr& end);
 
 		template<typename T> 
 		inline void addComponent(GOID goID, ComponentType type);
-	//private: // TODO: make this private
+	private:
+		
+
 		std::unordered_map<GOID, GameObject> gameObjects;
+
+		GOIDContainer allActiveGOIDs;
 		
 		GOID currentId = 0;
 	};

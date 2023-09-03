@@ -37,6 +37,7 @@ namespace gde::manager {
 
 	template<typename T>
 	inline ComponentType CAM::getComponentType() {
+		assert(componentTypes.find(typeid(T).name()) != componentTypes.end() && "tried to get unregistered component type");
 		return componentTypes[typeid(T).name()];
 	}
 }

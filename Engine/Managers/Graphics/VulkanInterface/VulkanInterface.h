@@ -22,7 +22,7 @@ namespace gde {
 			glm::vec4 color{};     // w is intensity
 		};
 
-		struct GlobalUbo { // TODO: move maybe?
+		struct GlobalUbo { 
 			glm::mat4 projectionView{ 1.f };
 			glm::mat4 view{ 1.f };
 			glm::mat4 inverseView{ 1.f };

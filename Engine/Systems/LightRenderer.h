@@ -13,6 +13,8 @@ namespace gde::system {
 		LightRenderer(const LightRenderer&) = delete;
 		LightRenderer& operator=(const LightRenderer&) = delete;
 
+		void setSignature() override;
+
 		void renderLights();
 	private:
 		int pipelineIndex;

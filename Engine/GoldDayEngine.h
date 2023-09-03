@@ -6,12 +6,14 @@
 #include "Managers/MetaObjectManager/MetaObjectManager.h"
 #include "Managers/MetaObjectManager/MetaObjectManager.inl"
 
+class Application; // TODO: remove this
+
 namespace gde {
 	
 	class GoldDayEngine{
 
 	public:
-		GoldDayEngine(std::string windowName, glm::vec2 windowDimentions);
+		GoldDayEngine(const std::string& windowName, glm::vec2 windowDimentions);
 		~GoldDayEngine();
 
 		void start();
@@ -22,6 +24,9 @@ namespace gde {
 		manager::HIM& getHumanInterfaceManager() { return humanInterfaceManager; }
 		manager::HIM& getHIM() { return humanInterfaceManager; }
 		manager::MOM& getMOM() { return metaObjectManager; }
+
+		Application* appPtr; // TODO: remove this when scripting is done
+		GOID cameraID; // TODO: remove when camera is made into component
 
 	private:
 		manager::DebugManager debugManager;
@@ -34,8 +39,7 @@ namespace gde {
 		std::chrono::steady_clock::time_point currentTime;
 		float getDeltaTime();
 
-		void loadGameObjectsTEMP();
-		void customControllerTEMP(float dt, GameObject& gameObject);
+		
 	};
 
 }

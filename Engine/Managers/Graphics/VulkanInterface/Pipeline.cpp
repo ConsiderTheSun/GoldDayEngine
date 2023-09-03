@@ -28,10 +28,8 @@ namespace gde {
 
     std::vector<char> Pipeline::readFile(const std::string& filepath) {
         std::ifstream file{ filepath, std::ios::ate | std::ios::binary };
-
-        if (!file.is_open()) {
-            throw std::runtime_error("failed to open file: " + filepath); // TODO: should change this to assert at some point
-        }
+           
+        assert(file.is_open() && "failed to open file");
 
         size_t fileSize = static_cast<size_t>(file.tellg());
         std::vector<char> buffer(fileSize);
@@ -152,7 +150,7 @@ namespace gde {
         configInfo.rasterizationInfo.polygonMode = VK_POLYGON_MODE_FILL;
         configInfo.rasterizationInfo.lineWidth = 1.0f;
         configInfo.rasterizationInfo.cullMode = VK_CULL_MODE_BACK_BIT;
-        configInfo.rasterizationInfo.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; // TODO: I switched this from clockwise, might cause problems later
+        configInfo.rasterizationInfo.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE; // TODO: defaut is clockwise, might cause problems later
         configInfo.rasterizationInfo.depthBiasEnable = VK_FALSE;
         configInfo.rasterizationInfo.depthBiasConstantFactor = 0.0f;  // Optional
         configInfo.rasterizationInfo.depthBiasClamp = 0.0f;           // Optional

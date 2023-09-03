@@ -9,7 +9,7 @@
 #include <bitset>
 
 namespace gde {
-
+    using ComponentType = std::uint8_t;
     using GOID = std::uint32_t;
     const std::uint32_t MAX_ENTITIES = 5000;
 
@@ -30,11 +30,15 @@ namespace gde {
 
         GOID getId() const { return id; }
 
-        Signature signature;
+        const Signature& getSignature() { return signature; }
+        void addToSignature(ComponentType type) { signature.set(type, true); }
 
     private:
         
 
         GOID id;
+
+
+        Signature signature;
     };
 }

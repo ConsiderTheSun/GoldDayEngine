@@ -8,9 +8,11 @@
 #include "../../Components/Render.h"
 #include "../../Components/PointLight.h"
 
-namespace gde::manager {
+namespace gde {
 	using ComponentType = std::uint8_t;
+}
 
+namespace gde::manager {
 	class ComponentArrayManager : public Manager {
 	public:
 		ComponentArrayManager(GoldDayEngine& _engine);

@@ -10,12 +10,20 @@ namespace gde::system {
 	Renderer::Renderer(GoldDayEngine& _engine)
 		: System{_engine} {
 		
+		
 		pipelineIndex = engine.getGraphicsManager().getVkInterface().createPipeline(VulkanInterface::PipelineType::DEFAULT);
 	}
 
 	Renderer::~Renderer() {
 	}
 
+	void Renderer::setSignature() {
+		gde::Signature rendererSignature;
+		rendererSignature.set(engine.getMOM().getComponentType<component::Transform>());
+		rendererSignature.set(engine.getMOM().getComponentType<component::Render>());
+
+		systemSignature = rendererSignature;
+	}
 
 	void Renderer::renderGameObjects() {
 		auto& vkInterface = engine.getGraphicsManager().getVkInterface();
@@ -23,9 +31,11 @@ namespace gde::system {
 		vkInterface.bindPipeline(pipelineIndex);
 		vkInterface.bindDescriptorSets(pipelineIndex);
 
-		for (auto& kv : engine.getMOM().getGOM().gameObjects) {
-			GOID id = kv.first;
-			if ((engine.getMOM().getSignature(id) & systemSignature) != systemSignature) continue;
+		GOIDItr itr;
+		GOIDItr end;
+		engine.getMOM().getRelevantGOIDs(systemSignature, itr, end);
+		for (; itr != end; itr++) {
+			GOID id = *itr;
 
 			VulkanInterface::DefaultPushConstantData push{};
 

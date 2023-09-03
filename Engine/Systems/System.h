@@ -1,6 +1,7 @@
 #pragma once
 #include <bitset>
 
+namespace gde { class GoldDayEngine; }
 namespace gde::system {
 	using Signature = std::bitset<MAX_COMPONENTS>;
 	class System {
@@ -12,7 +13,10 @@ namespace gde::system {
 
 		virtual std::string getType() const = 0;
 
-		void setSignature(Signature signature) { systemSignature = signature; }
+		void _setSignature(Signature signature) { systemSignature = signature; }
+		virtual void setSignature() = 0;
+
+		Signature getSignature() { return systemSignature; }
 
 	protected:
 		GoldDayEngine& engine;
