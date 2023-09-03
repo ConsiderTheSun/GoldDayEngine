@@ -1,20 +1,20 @@
 #pragma once
-
+#include "System.h"
 namespace gde{ class GoldDayEngine; }
 namespace gde::system {
 	
 
-	class LightRenderer {
+	class LightRenderer : public System {
 	public:
 		LightRenderer(GoldDayEngine& _engine);
 		~LightRenderer();
+		std::string getType() const override { return typeid(LightRenderer).name(); };
 
 		LightRenderer(const LightRenderer&) = delete;
 		LightRenderer& operator=(const LightRenderer&) = delete;
 
 		void renderLights();
 	private:
-		GoldDayEngine& engine;
 		int pipelineIndex;
 	};
 }

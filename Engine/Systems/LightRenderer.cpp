@@ -5,7 +5,7 @@
 
 namespace gde::system {
 	LightRenderer::LightRenderer(GoldDayEngine& _engine)
-		: engine{ _engine } {
+		: System{ _engine } {
 
 		pipelineIndex = engine.getGraphicsManager().getVkInterface().createPipeline(VulkanInterface::PipelineType::LIGHT);
 	}
@@ -19,16 +19,18 @@ namespace gde::system {
 		vkInterface.bindPipeline(pipelineIndex);
 		vkInterface.bindDescriptorSets(pipelineIndex);
 
-		for (auto& kv : engine.getGOM().gameObjects) {
-			auto& obj = kv.second;
-			if (!obj.hasPointLight) continue;
+		for (auto& kv : engine.getMOM().getGOM().gameObjects) {
+			GOID id = kv.first;
 
-			component::PointLight& pl = engine.getComponentManager().getComponent(obj.getId());
+			if ((engine.getMOM().getSignature(id) & systemSignature) != systemSignature) continue;
+
+			component::Transform& transform = engine.getMOM().getComponent<component::Transform>(id);
+			component::PointLight& pointLight = engine.getMOM().getComponent<component::PointLight>(id);
 
 			VulkanInterface::PointLightPushConstantData push{};
-			push.position = glm::vec4(obj.transform.translation, 1.f);
-			push.color = glm::vec4(obj.color, pl.lightIntensity);
-			push.radius = obj.transform.scale;
+			push.position = glm::vec4(transform.translation, 1.f);
+			push.color = glm::vec4(pointLight.color, pointLight.lightIntensity);
+			push.radius = transform.scale;
 
 			vkInterface.setPushConstantData(pipelineIndex, push);
 

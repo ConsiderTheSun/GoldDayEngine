@@ -6,7 +6,7 @@
 #include "../GameObject/GameObject.h"
 namespace gde::system {
 	Light::Light(GoldDayEngine& _engine)
-		: engine{ _engine } {
+		: System{ _engine } {
 
 	}
 
@@ -24,20 +24,19 @@ namespace gde::system {
 
 		// update light stuff
 		int lightIndex = 0;
-		for (auto& kv : engine.getGOM().gameObjects) {
-			auto& obj = kv.second;
-
-			if (!obj.hasPointLight) continue;
-
-			component::PointLight& pl = engine.getComponentManager().getComponent(obj.getId());
+		for (auto& kv : engine.getMOM().getGOM().gameObjects) {
+			GOID id = kv.first;
+			if ((engine.getMOM().getSignature(id) & systemSignature) != systemSignature) continue;
 
 
+			component::PointLight& pointLight = engine.getMOM().getComponent<component::PointLight>(id);
 
 			assert(lightIndex < MAX_LIGHTS && "Point lights exceed maximum specified");
 
 			// copy light to ubo
-			ubo.pointLights[lightIndex].position = glm::vec4(obj.transform.translation, 1.f);
-			ubo.pointLights[lightIndex].color = glm::vec4(obj.color, pl.lightIntensity);
+			component::Transform& transform = engine.getMOM().getComponent<component::Transform>(id);
+			ubo.pointLights[lightIndex].position = glm::vec4(transform.translation, 1.f);
+			ubo.pointLights[lightIndex].color = glm::vec4(pointLight.color, pointLight.lightIntensity);
 
 			lightIndex += 1;
 		}

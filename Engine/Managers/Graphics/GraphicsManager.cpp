@@ -9,10 +9,7 @@ namespace gde::manager {
 	GraphicsManager::GraphicsManager(GoldDayEngine& _engine, std::string windowName, glm::vec2 windowDimentions) :
 		Manager(_engine),
 		window(_engine, windowName, windowDimentions),
-		vkInterface{ engine,window },
-		rendererSystem{ _engine },
-		lightRendererSystem{ _engine },
-		lightSystem{ _engine }
+		vkInterface{ engine,window }
 	{
 		engine.getDebugManager().getLogger().log(Logger::Verbose, "GraphicsManager Instantiated");
 	}
@@ -29,13 +26,13 @@ namespace gde::manager {
 		auto commandBuffer = vkInterface.beginFrame();
 		if (commandBuffer) {
 
-			lightSystem.updateLightData(mainCamera);
+			engine.getMOM().getSystem<system::Light>()->updateLightData(mainCamera);
 
 			vkInterface.beginSwapChainRenderPass(commandBuffer);
 
-			rendererSystem.renderGameObjects();
+			engine.getMOM().getSystem<system::Renderer>()->renderGameObjects();
 			if (engine.getDebugManager().isLightRenderingEnabled()) {
-				lightRendererSystem.renderLights();
+				engine.getMOM().getSystem<system::LightRenderer>()->renderLights();
 			}
 
 			vkInterface.endSwapChainRenderPass(commandBuffer);

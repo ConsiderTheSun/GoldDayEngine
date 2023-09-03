@@ -5,11 +5,11 @@
 namespace gde {
 	class GameObjectFactory {
 	public:
-		GameObjectFactory(manager::GOM& _gom);
+		GameObjectFactory();
 
-		GameObject& makeEmptyGameObject();
+		// TODO: GameObject& makeFromArchetype(const std::string& archName, GameObject& go);
+		//		 bool createArchetype(const std::string& archName, const GameObject& templateGO);
 	private:
-		manager::GOM& gom;
 	};
 
 	typedef GameObjectFactory GOF;

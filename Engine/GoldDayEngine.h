@@ -2,9 +2,10 @@
 
 #include "Managers/Graphics/GraphicsManager.h"
 #include "Managers/HumanInterfaceManager/HumanInterfaceManager.h"
-#include "Managers/GameObjectManager/GameObjectManager.h"
-#include "Managers/ComponentManager/ComponentManager.h"
-#include "GameObject/GameObjectFactory.h"
+
+#include "Managers/MetaObjectManager/MetaObjectManager.h"
+#include "Managers/MetaObjectManager/MetaObjectManager.inl"
+
 namespace gde {
 	
 	class GoldDayEngine{
@@ -20,18 +21,14 @@ namespace gde {
 		manager::GraphicsManager& getGraphicsManager() { return graphicsManager; }
 		manager::HIM& getHumanInterfaceManager() { return humanInterfaceManager; }
 		manager::HIM& getHIM() { return humanInterfaceManager; }
-		manager::GOM& getGameObjectManager() { return gom; }
-		manager::GOM& getGOM() { return gom; }
-		manager::ComponentManager& getComponentManager() { return componentManager; }
+		manager::MOM& getMOM() { return metaObjectManager; }
 
 	private:
 		manager::DebugManager debugManager;
 		manager::GraphicsManager graphicsManager;
 		manager::HIM humanInterfaceManager;
-		manager::GOM gom;
-		manager::ComponentManager componentManager;
 
-		GOF gof;
+		manager::MOM metaObjectManager;
 
 		// TODO: move to dedicated frame rate manager system
 		std::chrono::steady_clock::time_point currentTime;

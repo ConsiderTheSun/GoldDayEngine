@@ -4,14 +4,16 @@
 
 #include "../GoldDayEngine.h"
 
-#include "../../Components/PointLight.h"
 #include "../../Components/Transform.h"
+#include "../../Components/Render.h"
+#include "../../Components/PointLight.h"
+
 
 namespace gde::manager {
 	template<typename T>
-	inline void GOM::addComponent(Entity id, T component) {
+	inline void GOM::addComponent(GOID goID, ComponentType type) {
 
-		auto itr = gameObjects.find(id);
+		auto itr = gameObjects.find(goID);
 		if (itr == gameObjects.end()) {
 			engine.getDebugManager().getLogger().log(Logger::Channel::Error, "Tried to add component to invalid id");
 			return;
@@ -19,14 +21,7 @@ namespace gde::manager {
 
 		GameObject& go = itr->second;
 
-		if (std::is_same<T, component::PointLight>::value) {
-			go.hasPointLight = true;
-		}
-		else if (std::is_same<T, component::Transform>::value) {
-			go.hasTransform = true;
-		}
-
-		engine.getComponentManager().addComponent<T>(id, component);
+		go.signature.set(type, true);
 	}
 
 }

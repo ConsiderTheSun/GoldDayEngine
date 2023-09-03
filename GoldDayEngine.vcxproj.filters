@@ -84,6 +84,15 @@
     <ClCompile Include="Engine\EngineIncludes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Managers\MetaObjectManager\MetaObjectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\ComponentArrayManager\ComponentArrayManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GoldDayEngine.h">
@@ -155,13 +164,13 @@
     <ClInclude Include="Engine\Systems\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Managers\ComponentManager\ComponentManager.h">
+    <ClInclude Include="Engine\Managers\ComponentArrayManager\ComponentArrayManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Managers\ComponentManager\ComponentArray.h">
+    <ClInclude Include="Engine\Managers\ComponentArrayManager\ComponentArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Components\PointLight.h">
@@ -170,12 +179,30 @@
     <ClInclude Include="Engine\EngineIncludes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Managers\MetaObjectManager\MetaObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Render.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Systems\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Managers\GameObjectManager\GameObjectManager.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Engine\Managers\ComponentManager\ComponentManager.inl">
+    <None Include="Engine\Managers\ComponentArrayManager\ComponentArrayManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Engine\Managers\MetaObjectManager\MetaObjectManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

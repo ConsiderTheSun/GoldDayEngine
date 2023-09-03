@@ -28,9 +28,6 @@ namespace gde::manager {
 	private:
 		Window window;
 		VulkanInterface vkInterface;
-		system::Renderer rendererSystem;
-		system::LightRenderer lightRendererSystem;
-		system::Light lightSystem;
 		
 	public:
 		Camera mainCamera{}; // TODO: make component

@@ -16,7 +16,6 @@
 #include <unordered_set>
 
 // other lib stuff
-
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
@@ -28,7 +27,5 @@
 
 // engine stuff (should only be mostly done files that won't change much)
 #include "Managers/Debug/DebugManager.h"
-
 #include "Managers/Graphics/VulkanInterface/VulkanInterface.h"
-
 #include "../Utilities/Hash.h"

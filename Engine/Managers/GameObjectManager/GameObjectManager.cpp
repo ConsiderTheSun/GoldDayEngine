@@ -12,12 +12,18 @@ namespace gde::manager {
 
 	}
 
-	GameObject& GOM::AddGameObject() {
-
+	GameObject& GOM::addGameObject() {
 		auto a = gameObjects.emplace(currentId, GameObject{ currentId });
 		++currentId;
 		return a.first->second;
 	}
+
+
+	GameObject& GOM::getGameObject(GOID id) {
+		assert(gameObjects.find(id) != gameObjects.end() && "invalid gameObject ID searched for.");
+		return gameObjects.find(id)->second;
+	}
+
 
 	
 }
