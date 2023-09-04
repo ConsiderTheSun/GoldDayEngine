@@ -158,8 +158,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Engine\Managers\ComponentArrayManager\ComponentArrayManager.cpp" />
-    <ClCompile Include="Engine\Managers\Debug\DebugManager.cpp" />
-    <ClCompile Include="Engine\Managers\Debug\Logger.cpp" />
+    <ClCompile Include="Engine\Managers\DebugManager\DebugManager.cpp" />
+    <ClCompile Include="Engine\Managers\DebugManager\Logger.cpp" />
     <ClCompile Include="Engine\Managers\GameObjectManager\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Managers\Graphics\Camera.cpp" />
     <ClCompile Include="Engine\Managers\Graphics\GraphicsManager.cpp" />
@@ -193,8 +193,8 @@
     <ClInclude Include="Engine\GameObject\GameObject.h" />
     <ClInclude Include="Engine\GameObject\GameObjectFactory.h" />
     <ClInclude Include="Engine\GoldDayEngine.h" />
-    <ClInclude Include="Engine\Managers\Debug\DebugManager.h" />
-    <ClInclude Include="Engine\Managers\Debug\Logger.h" />
+    <ClInclude Include="Engine\Managers\DebugManager\DebugManager.h" />
+    <ClInclude Include="Engine\Managers\DebugManager\Logger.h" />
     <ClInclude Include="Engine\Managers\GameObjectManager\GameObjectManager.h" />
     <ClInclude Include="Engine\Managers\Graphics\Camera.h" />
     <ClInclude Include="Engine\Managers\Graphics\GraphicsManager.h" />

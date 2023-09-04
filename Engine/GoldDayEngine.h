@@ -21,7 +21,6 @@ namespace gde {
 
 		manager::DebugManager& getDebugManager() { return debugManager; }
 		manager::GraphicsManager& getGraphicsManager() { return graphicsManager; }
-		manager::HIM& getHumanInterfaceManager() { return humanInterfaceManager; }
 		manager::HIM& getHIM() { return humanInterfaceManager; }
 		manager::MOM& getMOM() { return metaObjectManager; }
 

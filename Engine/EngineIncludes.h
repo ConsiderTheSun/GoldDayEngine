@@ -26,6 +26,6 @@
 
 
 // engine stuff (should only be mostly done files that won't change much)
-#include "Managers/Debug/DebugManager.h"
+#include "Managers/DebugManager/DebugManager.h"
 #include "Managers/Graphics/VulkanInterface/VulkanInterface.h"
 #include "../Utilities/Hash.h"

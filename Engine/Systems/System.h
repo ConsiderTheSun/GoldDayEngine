@@ -13,7 +13,6 @@ namespace gde::system {
 
 		virtual std::string getType() const = 0;
 
-		void _setSignature(Signature signature) { systemSignature = signature; }
 		virtual void setSignature() = 0;
 
 		Signature getSignature() { return systemSignature; }

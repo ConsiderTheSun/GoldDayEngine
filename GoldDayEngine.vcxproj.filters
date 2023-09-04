@@ -21,13 +21,13 @@
     <ClCompile Include="Engine\GoldDayEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Managers\Debug\Logger.cpp">
+    <ClCompile Include="Engine\Managers\DebugManager\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Managers\Graphics\GraphicsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Managers\Debug\DebugManager.cpp">
+    <ClCompile Include="Engine\Managers\DebugManager\DebugManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Managers\Graphics\Window.cpp">
@@ -101,10 +101,10 @@
     <ClInclude Include="Engine\GoldDayEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Managers\Debug\Logger.h">
+    <ClInclude Include="Engine\Managers\DebugManager\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Managers\Debug\DebugManager.h">
+    <ClInclude Include="Engine\Managers\DebugManager\DebugManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Managers\Graphics\GraphicsManager.h">
