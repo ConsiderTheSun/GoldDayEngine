@@ -62,7 +62,7 @@ namespace gde {
 			return std::static_pointer_cast<T1>(componentInterfaces.find(component)->second);
 		}
 
-		// Input is simple enough that it doesn't need an interface and can safely be passes to the app layer, for now
+		// these are simple enough that they doesn't need an interface and can safely be passes to the app layer, for now
 		Input& getInput() { return engine.getHIM().getInput(); }
 		manager::DebugManager& getDebugger() { return engine.getDebugManager(); }
 

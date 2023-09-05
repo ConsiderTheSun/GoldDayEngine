@@ -105,9 +105,8 @@ void BasicTestingApp::update(float dt) {
 	if (input.keyDown(GLFW_KEY_ESCAPE) == gde::Input::State::Enter) {
 		iEngine.end();
 	}
-	
-	gde::component::Transform& cameraTransform = iGO.getComponent<gde::component::Transform>(iEngine.mainCamera());
 
+	
 	
 
 	if (input.keyDown(GLFW_KEY_L) == gde::Input::State::Enter) 
@@ -135,14 +134,20 @@ void BasicTestingApp::update(float dt) {
 	rotate.y += deltaMouse.x;
 	if (locked) {
 		if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()) {
-			cameraTransform.rotation += lookSpeed * dt * glm::normalize(rotate);
+			iTransform->setRotation(iEngine.mainCamera(), 
+				iTransform->getRotation(iEngine.mainCamera()) + lookSpeed * dt * glm::normalize(rotate));
 		}
-		cameraTransform.rotation.x = glm::clamp(cameraTransform.rotation.x, -1.5f, 1.5f);
-		cameraTransform.rotation.y = glm::mod(cameraTransform.rotation.y, glm::two_pi<float>());
+		auto rot = iTransform->getRotation(iEngine.mainCamera());
+		glm::vec3 newRotation = glm::vec3{
+			glm::clamp(rot.x, -1.5f, 1.5f),
+			glm::mod(rot.y, glm::two_pi<float>()),
+			rot.z 
+		};
+		iTransform->setRotation(iEngine.mainCamera(), newRotation);
 	}
 
 
-	float yaw = cameraTransform.rotation.y;
+	float yaw = iTransform->getRotation(iEngine.mainCamera()).y;
 
 	const glm::vec3 forwardDir{ sin(yaw), 0.f, cos(yaw) };
 	const glm::vec3 rightDir{ forwardDir.z, 0.f, -forwardDir.x };
@@ -158,10 +163,11 @@ void BasicTestingApp::update(float dt) {
 	if (input.keyDown(GLFW_KEY_LEFT_SHIFT) == gde::Input::State::Down) moveDir -= upDir;
 
 	if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()) {
-		cameraTransform.translation += moveSpeed * dt * glm::normalize(moveDir);
+		iTransform->setPosition(iEngine.mainCamera(),
+			iTransform->getPosition(iEngine.mainCamera()) + moveSpeed * dt * glm::normalize(moveDir));
 	}
-
-	iCamera->setViewYXZ(cameraTransform.translation, cameraTransform.rotation);
+	iCamera->setViewYXZ(iTransform->getPosition(iEngine.mainCamera()), 
+						iTransform->getRotation(iEngine.mainCamera()));
 	
 
 	auto rotateLight = glm::rotate(glm::mat4(1.f), 0.5f * dt, { 0.f, -1.f, 0.f });
@@ -181,7 +187,6 @@ void BasicTestingApp::update(float dt) {
 		assert(lightIndex < MAX_LIGHTS && "Point lights exceed maximum specified");
 
 		// update light position
-		gde::component::Transform& transform = iGO.getComponent<gde::component::Transform>(id);
-		transform.translation = glm::vec3(rotateLight * glm::vec4(transform.translation, 1.f));
+		iTransform->setPosition(id, glm::vec3(rotateLight * glm::vec4(iTransform->getPosition(id), 1.f)));
 	}
 }

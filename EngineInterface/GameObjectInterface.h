@@ -17,10 +17,6 @@ namespace gde {
 		template<typename T>
 		inline void addComponent(GOID goID, const T& component);
 
-		template<typename T>
-		T& getComponent(GOID goID) {
-			return engine.getMOM().getComponent<T>(goID);
-		}
 
 		void getRelevantGOIDs(Signature signature, GOIDItr& begin, GOIDItr& end) {
 			return engine.getMOM().getRelevantGOIDs(signature, begin, end);
