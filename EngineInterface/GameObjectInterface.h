@@ -1,6 +1,6 @@
 #pragma once
 #include "../GoldDayEngine.h"
-
+#include "../Engine/Managers/GameObjectManager/GameObjectManager.inl"
 namespace gde {
 	class GameObjectInterface {
 	public:
@@ -15,7 +15,7 @@ namespace gde {
 		void destroyGameObject(GOID id); //TODO: implement
 
 		template<typename T>
-		inline void addComponent(GOID goID, const T& component);
+		inline void addComponent(GOID goID, const T& component = T{});
 
 
 		void getRelevantGOIDs(Signature signature, GOIDItr& begin, GOIDItr& end) {

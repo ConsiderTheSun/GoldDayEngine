@@ -28,17 +28,26 @@ namespace gde {
 	void GoldDayEngine::start() {
 		debugManager.getLogger().log(Logger::Info, "GoldDayEngine Starting");
 
-        // TODO: gross, will be fixed w/ camera component 
-        cameraID = metaObjectManager.makeGameObject();
+        
 
-        metaObjectManager.addComponent<component::Transform>(cameraID,
-            component::Transform{glm::vec3(0,0,-2.5), glm::vec3(0), 1.f});
+        gde::GOIDItr itr;
+        gde::GOIDItr end;
+        metaObjectManager.getRelevantGOIDs(metaObjectManager.getSystem<system::CameraUpdate>()->getSignature(), itr, end);
 
-        // TODO: prob wanna move this function to the camera component class
-        graphicsManager.setCameraAspectRatio(graphicsManager.getVkInterface().getAspectRatio());
+        int cameraCount = 0;
+        for (; itr != end; itr++) {
+            ++cameraCount;
+        }
 
-        // TODO: remove this, have it set in application layer
-        graphicsManager.mainCamera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
+        if (cameraCount > 1) {
+            debugManager.getLogger().log(Logger::Warning, "Multicamera not implemented, using first camera");
+        }
+        if (cameraCount == 0) {
+            debugManager.getLogger().log(Logger::Error, "No camera in scene");
+        }
+
+        // sets all cameras to the initial aspect ratio
+        metaObjectManager.getSystem<system::CameraUpdate>()->setCameraAspectRatio();
 
         currentTime = std::chrono::high_resolution_clock::now();
 		while (!graphicsManager.getWindow().shouldClose()) {

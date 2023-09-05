@@ -2,7 +2,6 @@
 
 #include <set>
 #include "System.h"
-#include "../Managers/Graphics/Camera.h"
 #include "../GameObject/GameObject.h"
 
 namespace gde { class GoldDayEngine; }
@@ -18,7 +17,7 @@ namespace gde::system {
 
 		void setSignature() override;
 
-		void updateLightData(const Camera& camera);
+		void updateLightData(GlobalUbo& ubo);
 	private:
 
 		std::set<GOID> mEntities;

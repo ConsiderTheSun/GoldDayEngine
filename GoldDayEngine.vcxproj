@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Applications\BasicTesting\BasicTestingApp.cpp" />
     <ClCompile Include="EngineInterface\GameObjectInterface.cpp" />
+    <ClCompile Include="Engine\Components\Camera.cpp" />
     <ClCompile Include="Engine\EngineIncludes.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -162,10 +163,10 @@
     <ClCompile Include="Engine\Managers\DebugManager\DebugManager.cpp" />
     <ClCompile Include="Engine\Managers\DebugManager\Logger.cpp" />
     <ClCompile Include="Engine\Managers\GameObjectManager\GameObjectManager.cpp" />
-    <ClCompile Include="Engine\Managers\Graphics\Camera.cpp" />
     <ClCompile Include="Engine\Managers\Graphics\GraphicsManager.cpp" />
     <ClCompile Include="Engine\Managers\MetaObjectManager\MetaObjectManager.cpp" />
     <ClCompile Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.cpp" />
+    <ClCompile Include="Engine\Systems\CameraUpdate.cpp" />
     <ClCompile Include="Engine\Systems\Light.cpp" />
     <ClCompile Include="Engine\Systems\LightRenderer.cpp" />
     <ClCompile Include="Engine\Systems\Renderer.cpp" />
@@ -204,10 +205,11 @@
     <ClInclude Include="Engine\Managers\DebugManager\DebugManager.h" />
     <ClInclude Include="Engine\Managers\DebugManager\Logger.h" />
     <ClInclude Include="Engine\Managers\GameObjectManager\GameObjectManager.h" />
-    <ClInclude Include="Engine\Managers\Graphics\Camera.h" />
+    <ClInclude Include="Engine\Managers\Graphics\GlobalUbo.h" />
     <ClInclude Include="Engine\Managers\Graphics\GraphicsManager.h" />
     <ClInclude Include="Engine\Managers\MetaObjectManager\MetaObjectManager.h" />
     <ClInclude Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.h" />
+    <ClInclude Include="Engine\Systems\CameraUpdate.h" />
     <ClInclude Include="Engine\Systems\Light.h" />
     <ClInclude Include="Engine\Systems\LightRenderer.h" />
     <ClInclude Include="Engine\Systems\Renderer.h" />

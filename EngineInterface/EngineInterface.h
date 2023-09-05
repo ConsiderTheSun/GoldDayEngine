@@ -13,6 +13,9 @@
 #include "ComponentInterface/PointLightInterface.h"
 #include "ComponentInterface/CameraInterface.h"
 
+
+
+
 namespace gde {
 	constexpr int COMPONENT_COUNT = 4;
 	struct InterfaceData {
@@ -67,11 +70,9 @@ namespace gde {
 		manager::DebugManager& getDebugger() { return engine.getDebugManager(); }
 
 		template<typename T>
-		void setSignature(Signature& signature, bool value=true) {
-			signature.set(engine.getMOM().getComponentType<T>(), value);
+		Signature getSignature() {
+			return engine.getMOM().getSystem<T>()->getSignature();
 		}
-
-		GOID mainCamera() { return engine.cameraID; }
 
 		GoldDayEngine& getEngine() { return engine; } // TODO: replace with robust interface 
 

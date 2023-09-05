@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "../EngineInterface/EngineInterface.h"
-#include "../Engine/Managers/GameObjectManager/GameObjectManager.inl" // TODO: remove when interface is done
 
 void BasicTestingApp::setup() {
 	auto& iGO = iEngine.getGOInterface();
@@ -22,17 +21,18 @@ void BasicTestingApp::setup() {
 	iEngine.registerSystem<gde::system::Renderer>();
 	iEngine.registerSystem<gde::system::LightRenderer>();
 	iEngine.registerSystem<gde::system::Light>();
-
-	// TODO: remove
-	std::cout << "iTransform: " << iTransform->getType() << std::endl;
-	std::cout << "iRender: " << iRender->getType() << std::endl;
-	std::cout << "iPointLight: " << iPointLight->getType() << std::endl;
+	iEngine.registerSystem<gde::system::CameraUpdate>();
 
 	
 	iInput.addTracking(6, GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D, GLFW_KEY_LEFT_SHIFT, GLFW_KEY_SPACE);
 	iInput.addTracking(3, GLFW_MOUSE_BUTTON_LEFT, GLFW_KEY_ESCAPE, GLFW_KEY_L);
 	iInput.lockMouse();
 
+
+	auto& cameraID = iGO.makeEmptyGameObject();
+	iGO.addComponent<gde::component::Transform>(cameraID,
+		iTransform->makeComponent(glm::vec3(0,0,-2.5), glm::vec3(0), 1.f));
+	iGO.addComponent<gde::component::Camera>(cameraID);
 	
 	auto& flatVaseID = iGO.makeEmptyGameObject();
 	iGO.addComponent<gde::component::Transform>(flatVaseID,
@@ -134,20 +134,20 @@ void BasicTestingApp::update(float dt) {
 	rotate.y += deltaMouse.x;
 	if (locked) {
 		if (glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()) {
-			iTransform->setRotation(iEngine.mainCamera(), 
-				iTransform->getRotation(iEngine.mainCamera()) + lookSpeed * dt * glm::normalize(rotate));
+			iTransform->setRotation(iCamera->mainCamera(), 
+				iTransform->getRotation(iCamera->mainCamera()) + lookSpeed * dt * glm::normalize(rotate));
 		}
-		auto rot = iTransform->getRotation(iEngine.mainCamera());
+		auto rot = iTransform->getRotation(iCamera->mainCamera());
 		glm::vec3 newRotation = glm::vec3{
 			glm::clamp(rot.x, -1.5f, 1.5f),
 			glm::mod(rot.y, glm::two_pi<float>()),
 			rot.z 
 		};
-		iTransform->setRotation(iEngine.mainCamera(), newRotation);
+		iTransform->setRotation(iCamera->mainCamera(), newRotation);
 	}
 
 
-	float yaw = iTransform->getRotation(iEngine.mainCamera()).y;
+	float yaw = iTransform->getRotation(iCamera->mainCamera()).y;
 
 	const glm::vec3 forwardDir{ sin(yaw), 0.f, cos(yaw) };
 	const glm::vec3 rightDir{ forwardDir.z, 0.f, -forwardDir.x };
@@ -163,29 +163,19 @@ void BasicTestingApp::update(float dt) {
 	if (input.keyDown(GLFW_KEY_LEFT_SHIFT) == gde::Input::State::Down) moveDir -= upDir;
 
 	if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()) {
-		iTransform->setPosition(iEngine.mainCamera(),
-			iTransform->getPosition(iEngine.mainCamera()) + moveSpeed * dt * glm::normalize(moveDir));
+		iTransform->setPosition(iCamera->mainCamera(),
+			iTransform->getPosition(iCamera->mainCamera()) + moveSpeed * dt * glm::normalize(moveDir));
 	}
-	iCamera->setViewYXZ(iTransform->getPosition(iEngine.mainCamera()), 
-						iTransform->getRotation(iEngine.mainCamera()));
-	
 
 	auto rotateLight = glm::rotate(glm::mat4(1.f), 0.5f * dt, { 0.f, -1.f, 0.f });
 	int lightIndex = 0;
 
 	gde::GOIDItr itr;
 	gde::GOIDItr end;
-	gde::Signature customSignature;
-	iEngine.setSignature<gde::component::Transform>(customSignature);
-	iEngine.setSignature<gde::component::PointLight>(customSignature);
-
-	iGO.getRelevantGOIDs(customSignature, itr, end);// dangerous, should check that customSignature is tracked TODO: allow register custom signature
+	iGO.getRelevantGOIDs(iEngine.getSignature<gde::system::Light>(), itr, end);
 
 	for (; itr != end; itr++) {
 		gde::GOID id = *itr;
-
-		assert(lightIndex < MAX_LIGHTS && "Point lights exceed maximum specified");
-
 		// update light position
 		iTransform->setPosition(id, glm::vec3(rotateLight * glm::vec4(iTransform->getPosition(id), 1.f)));
 	}

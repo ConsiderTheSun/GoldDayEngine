@@ -6,7 +6,6 @@
 
 #include "../../Systems/Renderer.h"
 #include "../../Systems/LightRenderer.h"
-#include "Camera.h"
 #include "../../Systems/Light.h"
 namespace gde::manager {
 	class GraphicsManager : public Manager {
@@ -22,14 +21,10 @@ namespace gde::manager {
 		Window& getWindow() { return window; }
 		VulkanInterface& getVkInterface() { return vkInterface; }
 
-		void setCameraAspectRatio(float aspect);
 		void drawFrame(float dt);
 		void waitIdle() { vkInterface.waitIdle(); }
 	private:
 		Window window;
 		VulkanInterface vkInterface;
-		
-	public:
-		Camera mainCamera{}; // TODO: make component
 	};
 }

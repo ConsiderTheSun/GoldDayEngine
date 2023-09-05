@@ -25,7 +25,6 @@ namespace gde {
 		manager::MOM& getMOM() { return metaObjectManager; }
 
 		Application* appPtr; // TODO: remove this when scripting is done
-		GOID cameraID; // TODO: remove when camera is made into component
 
 	private:
 		manager::DebugManager debugManager;

@@ -2,8 +2,8 @@
 
 #include "Camera.h"
 
-namespace gde {
-
+namespace gde::component {
+    
     void Camera::setOrthographicProjection(
         float left, float right, float top, float bottom, float cameraNear, float cameraFar) {
         glm::mat4 a{ 1.0f };

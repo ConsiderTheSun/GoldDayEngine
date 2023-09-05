@@ -1,6 +1,7 @@
 #pragma once
 #include "System.h"
 
+#include <typeinfo>
 namespace gde{ class GoldDayEngine; }
 namespace gde::system {
 	

@@ -8,20 +8,24 @@ namespace gde {
 		CameraInterface(GoldDayEngine& _engine) : ComponentInterface{ _engine } {};
 		std::string getType() const override { return typeid(CameraInterface).name(); };
 
-		component::Camera makeComponent() {
-			return component::Camera{  }; // TODO: fill in
+		GOID mainCamera() { 
+			gde::GOIDItr begin;
+			gde::GOIDItr end;
+			gde::Signature cameraUpdateSignature = engine.getMOM().getSystem<system::CameraUpdate>()->getSignature();
+			engine.getMOM().getRelevantGOIDs(cameraUpdateSignature, begin, end);
+
+			return *begin;
 		}
 
 		float getFovY() {
-			return engine.getGraphicsManager().mainCamera.fovy;
+			return engine.getMOM().getComponent<component::Camera>(mainCamera()).fovy;
 		}
 		void setFovY(float newFovy) {
-			engine.getGraphicsManager().mainCamera.fovy = newFovy;
-			engine.getGraphicsManager().setCameraAspectRatio(engine.getGraphicsManager().getVkInterface().getAspectRatio());
-		}
+			engine.getMOM().getComponent<component::Camera>(mainCamera()).fovy = newFovy;
+			engine.getMOM().getComponent<component::Camera>(mainCamera())
+				.setPerspectiveProjection(engine.getGraphicsManager().getVkInterface().getAspectRatio(), 0.1f, 100.f);
 
-		void setViewYXZ(glm::vec3 position, glm::vec3 rotation) {
-			engine.getGraphicsManager().mainCamera.setViewYXZ(position,rotation);
+			engine.getMOM().getSystem<system::CameraUpdate>()->setCameraAspectRatio();
 		}
 	};
 }
