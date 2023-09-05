@@ -5,6 +5,7 @@
 #include "../Systems/Renderer.h"
 #include "../Systems/Light.h"
 #include "../Systems/LightRenderer.h"
+#include "../Systems/CameraUpdate.h"
 
 namespace gde {
 	using GOIDContainer = std::unordered_set<GOID>;

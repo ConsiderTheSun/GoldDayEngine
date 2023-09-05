@@ -152,7 +152,7 @@ namespace gde {
             window.wasWindowResized()) {
             window.resetWindowResizedFlag();
             recreateSwapChain();
-            engine.getGraphicsManager().setCameraAspectRatio(getAspectRatio());
+            engine.getMOM().getSystem<system::CameraUpdate>()->setCameraAspectRatio();
         }
         else if (result != VK_SUCCESS) {
             engine.getDebugManager().getLogger().log(Logger::Error, "failed to present swap chain image!");

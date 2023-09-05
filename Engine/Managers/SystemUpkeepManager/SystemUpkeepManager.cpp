@@ -3,7 +3,7 @@
 #include "SystemUpkeepManager.h"
 
 
-#include "../../GoldDayEngine.h" // TODO: rmv
+#include "../../GoldDayEngine.h"
 
 namespace gde::manager {
 	SystemUpkeepManager::SystemUpkeepManager(GoldDayEngine& _engine) : Manager(_engine) {

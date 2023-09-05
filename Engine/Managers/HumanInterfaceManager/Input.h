@@ -5,6 +5,7 @@
 
 #include "../Graphics/Window.h"
 
+namespace gde::manager { class HumanInterfaceManager; }
 namespace gde {
 
 	class Input {
@@ -19,7 +20,8 @@ namespace gde {
 
 		Input(Window& _window);
 
-		void update();
+		Input(const Input&) = delete;
+		Input& operator=(const Input&) = delete;
 
 		State keyDown(int key) const;
 
@@ -39,6 +41,8 @@ namespace gde {
 		void reset();
 	private:
 
+		void update();
+
 		Window& window;
 
 		glm::vec2 mousePosition;
@@ -48,5 +52,7 @@ namespace gde {
 		float deltaScroll = 0;
 
 		std::unordered_map<int, ButtonState>  buttonTracker;
+
+		friend class manager::HumanInterfaceManager;
 	};
 }

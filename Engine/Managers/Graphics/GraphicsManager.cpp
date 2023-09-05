@@ -18,15 +18,18 @@ namespace gde::manager {
 		engine.getDebugManager().getLogger().log(Logger::Verbose, "GraphicsManager Freed");
 	}
 
-	void GraphicsManager::setCameraAspectRatio(float aspect) {
-		mainCamera.setPerspectiveProjection(aspect, 0.1f, 100.f);
-	}
-
 	void GraphicsManager::drawFrame(float dt) {
 		auto commandBuffer = vkInterface.beginFrame();
 		if (commandBuffer) {
 
-			engine.getMOM().getSystem<system::Light>()->updateLightData(mainCamera);
+			// sets ubo data
+			GlobalUbo ubo{};
+			engine.getMOM().getSystem<system::CameraUpdate>()->setCameraUBOData(ubo);
+			engine.getMOM().getSystem<system::Light>()->updateLightData(ubo);
+			
+
+			// writes to gpu
+			vkInterface.setUboData(ubo);
 
 			vkInterface.beginSwapChainRenderPass(commandBuffer);
 

@@ -54,7 +54,7 @@ namespace gde::manager {
 		T& getComponent(GOID goID) { return cam.getComponent<T>(goID); }
 
 		template<typename T>
-		ComponentType getComponentType() {return cam.getComponentType<T>(); } //TODO: remove this
+		ComponentType getComponentType() {return cam.getComponentType<T>(); }
 	private:
 		SUM sum;
 		GOM gom;

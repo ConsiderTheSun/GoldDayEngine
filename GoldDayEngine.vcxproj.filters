@@ -51,9 +51,6 @@
     <ClCompile Include="Engine\Systems\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Managers\Graphics\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Managers\HumanInterfaceManager\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +93,15 @@
     <ClCompile Include="Applications\BasicTesting\BasicTestingApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EngineInterface\GameObjectInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Systems\CameraUpdate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Components\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GoldDayEngine.h">
@@ -135,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Systems\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Managers\Graphics\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Managers\HumanInterfaceManager\Input.h">
@@ -203,6 +206,33 @@
     <ClInclude Include="Applications\BasicTesting\BasicTestingApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EngineInterface\GameObjectInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface\ComponentInterface\ComponentInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface\ComponentInterface\TransformInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface\ComponentInterface\RenderInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface\ComponentInterface\PointLightInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Components\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInterface\ComponentInterface\CameraInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Systems\CameraUpdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Managers\Graphics\GlobalUbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Managers\GameObjectManager\GameObjectManager.inl">
@@ -215,6 +245,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Engine\Managers\SystemUpkeepManager\SystemUpkeepManager.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="EngineInterface\GameObjectInterface.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
