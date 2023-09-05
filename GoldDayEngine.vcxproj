@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Applications\BasicTesting\BasicTestingApp.cpp" />
+    <ClCompile Include="EngineInterface\GameObjectInterface.cpp" />
     <ClCompile Include="Engine\EngineIncludes.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -183,7 +184,14 @@
   <ItemGroup>
     <ClInclude Include="Applications\BasicTesting\BasicTestingApp.h" />
     <ClInclude Include="EngineInterface\Application.h" />
+    <ClInclude Include="EngineInterface\ComponentInterface\CameraInterface.h" />
+    <ClInclude Include="EngineInterface\ComponentInterface\ComponentInterface.h" />
+    <ClInclude Include="EngineInterface\ComponentInterface\PointLightInterface.h" />
+    <ClInclude Include="EngineInterface\ComponentInterface\RenderInterface.h" />
+    <ClInclude Include="EngineInterface\ComponentInterface\TransformInterface.h" />
     <ClInclude Include="EngineInterface\EngineInterface.h" />
+    <ClInclude Include="EngineInterface\GameObjectInterface.h" />
+    <ClInclude Include="Engine\Components\Camera.h" />
     <ClInclude Include="Engine\Components\Render.h" />
     <ClInclude Include="Engine\EngineIncludes.h" />
     <ClInclude Include="Engine\Managers\ComponentArrayManager\ComponentArray.h" />
@@ -218,6 +226,7 @@
     <ClInclude Include="Engine\Utilities\Hash.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="EngineInterface\GameObjectInterface.inl" />
     <None Include="Engine\Managers\ComponentArrayManager\ComponentArrayManager.inl" />
     <None Include="Engine\Managers\GameObjectManager\GameObjectManager.inl" />
     <None Include="Engine\Managers\MetaObjectManager\MetaObjectManager.inl" />

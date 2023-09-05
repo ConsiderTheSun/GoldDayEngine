@@ -7,6 +7,7 @@
 #include "../../Components/Transform.h"
 #include "../../Components/Render.h"
 #include "../../Components/PointLight.h"
+#include "../../Components/Camera.h"
 
 namespace gde {
 	using ComponentType = std::uint8_t;
